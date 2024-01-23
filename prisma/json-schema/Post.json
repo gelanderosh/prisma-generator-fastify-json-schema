@@ -1,0 +1,20 @@
+{
+  "$id": "Post",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "user": {
+      "anyOf": [
+        {
+          "$ref": "User"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
