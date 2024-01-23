@@ -70,7 +70,7 @@ async function generateIndexFile({
     outputDir,
     exportFileName = 'index',
     exportAsEsModule,
-    useAssert,
+    useAssert = 'true',
     useWith,
     exportAsTs = 'true',
 }: {
@@ -92,11 +92,11 @@ async function generateIndexFile({
         indexFileExports = jsonSchemas
             .map(([name]) => {
                 return `export { default as ${name} } from './${name}.json'${
-                    useAssert
+                    useAssert === 'true'
                         ? ' assert { type: "json" }'
-                        : useWith
-                        ? ' with { type: "json" }'
-                        : ''
+                        : useWith === 'true'
+                          ? ' with { type: "json" }'
+                          : ''
                 }`
             })
             .join('\n')

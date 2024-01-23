@@ -49,18 +49,18 @@ function getJSONSchemaType(field: DMMF.Field): JSONSchema7['type'] {
         isScalarType(field) && !isList
             ? getJSONSchemaScalar(field.type)
             : field.isList
-            ? 'array'
-            : isEnumType(field)
-            ? 'string'
-            : 'object'
+              ? 'array'
+              : isEnumType(field)
+                ? 'string'
+                : 'object'
 
     const isFieldUnion = Array.isArray(scalarFieldType)
 
     return isRequired || isList
         ? scalarFieldType
         : isFieldUnion
-        ? Array.from(new Set([...scalarFieldType, 'null']))
-        : [scalarFieldType, 'null']
+          ? Array.from(new Set([...scalarFieldType, 'null']))
+          : [scalarFieldType, 'null']
 }
 
 function getDefaultValue(field: DMMF.Field): JSONSchema7['default'] {
@@ -135,8 +135,8 @@ function getItemsByDMMFType(
     return (isScalarType(field) && !field.isList) || isEnumType(field)
         ? undefined
         : isScalarType(field) && field.isList
-        ? { type: getJSONSchemaScalar(field.type) }
-        : getJSONSchemaForPropertyReference(field, transformOptions)
+          ? { type: getJSONSchemaScalar(field.type) }
+          : getJSONSchemaForPropertyReference(field, transformOptions)
 }
 
 function isSingleReference(field: DMMF.Field) {
