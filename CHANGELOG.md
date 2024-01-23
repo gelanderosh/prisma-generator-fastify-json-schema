@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/compare/v1.0.0...v1.0.1) (2024-01-23)
+
+
+### Bug Fixes
+
+* **version:** Version 1.0.1 release ([dfca9e1](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/dfca9e104a946419eedf7fff9bb29ae494ab7fa7))
+
 ## 1.0.0 (2024-01-23)
 
 
