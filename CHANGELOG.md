@@ -1,3 +1,16 @@
+## [1.1.0](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/compare/v1.0.1...v1.1.0) (2024-01-25)
+
+
+### Features
+
+* **schema:** Added option to ignore default values. ([bad4131](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/bad41313d062be4ad740fd25a0fe6152c785e39f))
+
+
+### Dependencies and Other Build Updates
+
+* **dev-deps:** bump @swc/cli from 0.1.65 to 0.3.0 ([ed4c697](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/ed4c69706c58d71408291fe73dfa6a948fb10cc8))
+* **dev-deps:** bump @types/node from 20.11.5 to 20.11.6 ([c96f8c9](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/c96f8c917cb57a98fc4367d044deb240a24d450f))
+
 ## [1.0.1](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/compare/v1.0.0...v1.0.1) (2024-01-23)
 
 
