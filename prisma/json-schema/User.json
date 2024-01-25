@@ -52,7 +52,6 @@
     },
     "role": {
       "type": "string",
-      "default": "USER",
       "enum": [
         "USER",
         "ADMIN"

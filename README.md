@@ -50,6 +50,7 @@ generator jsonSchema {
   exportFileName = "schemas"
   exportAsEsModule = "true"
   useAssert = "true"
+  ignoreDefaults = "true"
 }
 ```
 

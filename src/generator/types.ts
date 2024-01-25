@@ -21,4 +21,9 @@ export interface TransformOptions {
     includeRequiredFields?: 'true' | 'false'
     persistOriginalType?: 'true' | 'false'
     forceAnyOf?: 'true' | 'false'
+    ignoreDefaults?: 'true' | 'false'
+    generateExportFile?: 'true' | 'false'
+    exportFileName?: string
+    exportAsEsModule?: 'true' | 'false'
+    useAssert?: 'true' | 'false'
 }

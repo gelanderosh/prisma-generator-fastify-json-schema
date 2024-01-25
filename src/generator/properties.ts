@@ -184,12 +184,14 @@ function getPropertyDefinition(
     const defaultValue = getDefaultValue(field)
     const description = getDescription(field)
 
+    console.log(transformOptions.ignoreDefaults)
     const definition: JSONSchema7Definition = {
         ...convertUnionType(transformOptions.forceAnyOf, type),
         ...(transformOptions.persistOriginalType && {
             originalType: field.type,
         }),
-        ...(isDefined(defaultValue) && { default: defaultValue }),
+        ...(transformOptions.ignoreDefaults !== 'true' &&
+            isDefined(defaultValue) && { default: defaultValue }),
         ...(isDefined(format) && { format }),
         ...(isDefined(items) && { items }),
         ...(isDefined(enumList) && { enum: enumList }),
