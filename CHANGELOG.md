@@ -1,3 +1,17 @@
+## [1.1.1](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/compare/v1.1.0...v1.1.1) (2024-01-26)
+
+
+### Bug Fixes
+
+* **logging:** Removed multiple console.logs. ([ba09896](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/ba0989600aec32bd15a309994ae1ed11bda3cf53))
+
+
+### Dependencies and Other Build Updates
+
+* **dev-deps:** bump @swc/cli from 0.3.0 to 0.3.2 ([314d063](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/314d063dbed24253ed7e127786d15f82e59f05ab))
+* **dev-deps:** bump @swc/core from 1.3.105 to 1.3.106 ([1dadb56](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/1dadb56bcf34fc2836758007393d5a86a700f04b))
+* **dev-deps:** bump @types/node from 20.11.6 to 20.11.7 ([ec4bb99](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/ec4bb99f413bc082d6cd7fc8658de356902b4872))
+
 ## [1.1.0](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/compare/v1.0.1...v1.1.0) (2024-01-25)
 
 
