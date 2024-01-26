@@ -1,3 +1,10 @@
+## [1.1.4-beta.3](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/compare/v1.1.4-beta.2...v1.1.4-beta.3) (2024-01-26)
+
+
+### Bug Fixes
+
+* **build:** Fixed package-lock.json so it can build. ([9cc6b14](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/9cc6b140222226527e9ed2f5ead850383509430c))
+
 ## [1.1.4-beta.2](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/compare/v1.1.4-beta.1...v1.1.4-beta.2) (2024-01-26)
 
 
