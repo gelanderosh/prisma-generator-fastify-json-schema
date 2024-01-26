@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/compare/v1.1.1...v1.1.2) (2024-01-26)
+
+
+### Bug Fixes
+
+* **build:** Test binary. ([f74224b](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/f74224b90ba39b01d7cfd0ef7f9ba740a1d0c6e8))
+
 ## [1.1.1](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/compare/v1.1.0...v1.1.1) (2024-01-26)
 
 
