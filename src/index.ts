@@ -17,7 +17,6 @@ generatorHandler({
             options.dmmf,
             options.generator.config,
         )
-        console.log(jsonSchemas)
         for (const [name, schema] of jsonSchemas) {
             if (options.generator.output) {
                 const outputDir =

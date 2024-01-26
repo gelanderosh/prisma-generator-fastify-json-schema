@@ -184,7 +184,6 @@ function getPropertyDefinition(
     const defaultValue = getDefaultValue(field)
     const description = getDescription(field)
 
-    console.log(transformOptions.ignoreDefaults)
     const definition: JSONSchema7Definition = {
         ...convertUnionType(transformOptions.forceAnyOf, type),
         ...(transformOptions.persistOriginalType && {

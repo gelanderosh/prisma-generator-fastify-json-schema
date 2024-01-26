@@ -239,7 +239,6 @@ describe('JSON Schema Generator', () => {
 
         it('keeps relation fields by default', async () => {
             const dmmf = await getDMMF({ datamodel: datamodelPostGresQL })
-            console.log(dmmf)
             expect(transformDMMF(dmmf)).toEqual([
                 [
                     'User',

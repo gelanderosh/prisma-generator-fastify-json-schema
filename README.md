@@ -1,6 +1,7 @@
 [![Actions Status](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/workflows/build/badge.svg)](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/actions)
 [![Dependabot auto-merge](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/actions/workflows/dependabot.yml/badge.svg)](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/actions/workflows/dependabot.yml)
-[![CodeQL](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/actions/workflows/codeql-analysis.yml)[![npm](https://img.shields.io/npm/v/prisma-generator-fastify-json-schema)](https://www.npmjs.com/package/prisma-generator-fastify-json-schema)
+[![CodeQL](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/actions/workflows/codeql-analysis.yml)
+[![npm](https://img.shields.io/npm/v/prisma-generator-fastify-json-schema)](https://www.npmjs.com/package/prisma-generator-fastify-json-schema)
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/blob/main/LICENSE)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](https://github.com/Naereen/badges/)
