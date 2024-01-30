@@ -15,10 +15,12 @@ export type DefinitionMap = [name: string, definition: JSONSchema7Definition]
 export type PropertyMap = [...DefinitionMap, PropertyMetaData]
 
 export interface TransformOptions {
+    onlyWithoutRequired?: 'true' | 'false'
+    onlyWithRequired?: 'true' | 'false'
+    includeRequiredFields?: 'true' | 'false'
     keepRelationScalarFields?: 'true' | 'false'
     keepRelationFields?: 'true' | 'false'
     schemaId?: string
-    includeRequiredFields?: 'true' | 'false'
     persistOriginalType?: 'true' | 'false'
     forceAnyOf?: 'true' | 'false'
     ignoreDefaults?: 'true' | 'false'

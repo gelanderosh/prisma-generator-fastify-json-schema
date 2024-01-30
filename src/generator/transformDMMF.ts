@@ -1,5 +1,5 @@
 import type { DMMF } from '@prisma/generator-helper'
-import type { JSONSchema7 } from 'json-schema'
+import type { JSONSchema7, JSONSchema7Definition } from 'json-schema'
 import { DefinitionMap, TransformOptions } from './types'
 
 import { getInitialJSON } from './jsonSchema'
@@ -13,13 +13,82 @@ export function transformDMMF(
     const { models = [], enums = [], types = [] } = dmmf.datamodel
     const initialJSON = getInitialJSON()
 
-    const modelDefinitionsMap: DefinitionMap[] = models.map(
-        getJSONSchemaModel({ enums }, transformOptions),
+    const modelDefinitionsMap: DefinitionMap[] = []
+    const typeDefinitionsMap: DefinitionMap[] = []
+
+    const requiredSchemaGetter = getJSONSchemaModel(
+        { enums },
+        { ...transformOptions, includeRequiredFields: 'true' },
+    )
+    const notRequiredSchemaGetter = getJSONSchemaModel(
+        { enums },
+        { ...transformOptions, includeRequiredFields: 'false' },
     )
 
-    const typeDefinitionsMap: DefinitionMap[] = types.map(
-        getJSONSchemaModel({ enums }, transformOptions),
-    )
+    for (const model of models) {
+        let withRequired: JSONSchema7Definition = {}
+        let withoutRequired: JSONSchema7Definition = {}
+        if (!(transformOptions.onlyWithoutRequired === 'true')) {
+            ;[, withRequired] = requiredSchemaGetter(model)
+        }
+        if (!(transformOptions.onlyWithRequired === 'true')) {
+            ;[, withoutRequired] = notRequiredSchemaGetter(model)
+        }
+        if (
+            !(transformOptions.onlyWithRequired === 'true') &&
+            !(transformOptions.onlyWithoutRequired === 'true')
+        ) {
+            modelDefinitionsMap.push([
+                model.name,
+                {
+                    type: 'object',
+                    properties: {
+                        withRequired: withRequired,
+                        withoutRequired: withoutRequired,
+                    },
+                },
+            ])
+        } else {
+            modelDefinitionsMap.push([
+                model.name,
+                transformOptions.onlyWithRequired === 'true'
+                    ? withRequired
+                    : withoutRequired,
+            ])
+        }
+    }
+    for (const type of types) {
+        let withRequired: JSONSchema7Definition = {}
+        let withoutRequired: JSONSchema7Definition = {}
+        if (!(transformOptions.onlyWithoutRequired === 'true')) {
+            ;[, withRequired] = requiredSchemaGetter(type)
+        }
+        if (!(transformOptions.onlyWithRequired === 'true')) {
+            ;[, withoutRequired] = notRequiredSchemaGetter(type)
+        }
+        if (
+            !(transformOptions.onlyWithRequired === 'true') &&
+            !(transformOptions.onlyWithoutRequired === 'true')
+        ) {
+            typeDefinitionsMap.push([
+                type.name,
+                {
+                    type: 'object',
+                    properties: {
+                        withRequired: withRequired,
+                        withoutRequired: withoutRequired,
+                    },
+                },
+            ])
+        } else {
+            typeDefinitionsMap.push([
+                type.name,
+                transformOptions.onlyWithRequired === 'true'
+                    ? withRequired
+                    : withoutRequired,
+            ])
+        }
+    }
 
     const definitions: DefinitionMap[] = [
         ...modelDefinitionsMap,

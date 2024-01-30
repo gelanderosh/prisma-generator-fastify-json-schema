@@ -60,7 +60,7 @@ export function getJSONSchemaModel(
             }
         }
 
-        if (transformOptions.includeRequiredFields) {
+        if (transformOptions.includeRequiredFields === 'true') {
             const required = definitionPropsMap.reduce(
                 (filtered: string[], [name, , fieldMetaData]) => {
                     if (
