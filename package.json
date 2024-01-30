@@ -28,7 +28,7 @@
         "url": "https://github.com/mexdevelop/prisma-generator-fastify-json-schema/issues"
     },
     "dependencies": {
-        "@prisma/generator-helper": "5.8.1",
+        "@prisma/generator-helper": "5.9.0",
         "@prisma/internals": "5.8.1"
     },
     "devDependencies": {
