@@ -16,7 +16,7 @@ export function transformDMMF(
     }: DMMF.Datamodel = dmmf.datamodel
     const initialJSON = getInitialJSON()
 
-    const modelMetadata: {} = { enums }
+    const modelMetadata: object = { enums }
 
     const modelDefinitionsMap: DefinitionMap[] = models.map(
         getJSONSchemaModel(modelMetadata as ModelMetaData, transformOptions),
