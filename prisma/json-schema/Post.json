@@ -3,13 +3,19 @@
   "type": "object",
   "properties": {
     "withoutRequired": {
-      "id": {
-        "type": "integer"
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        }
       }
     },
     "withRequired": {
-      "id": {
-        "type": "integer"
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        }
       },
       "required": []
     },

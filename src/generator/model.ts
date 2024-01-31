@@ -30,11 +30,12 @@ export function getJSONSchemaModel(
         const propertiesWithoutRelationScalars = propertiesMap.filter(
             (prop) => !relationScalarFields.includes(prop[0]),
         )
-        let builtProperties: JSONSchema7Definition = {}
+        let builtProperties: { [key: string]: JSONSchema7Definition } = {}
 
         const definition: JSONSchema7Definition = {}
         definition.type = 'object'
         definition.properties = {}
+        definition.properties.withoutRequired = {}
 
         if (transformOptions.keepRelationScalarFields === 'true') {
             builtProperties = Object.fromEntries(
@@ -65,10 +66,12 @@ export function getJSONSchemaModel(
         )
 
         definition.properties.withoutRequired = {
-            ...builtProperties,
+            type: 'object',
+            properties: builtProperties,
         }
         definition.properties.withRequired = {
-            ...builtProperties,
+            type: 'object',
+            properties: builtProperties,
             required,
         }
         definition.properties.where = {
