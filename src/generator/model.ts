@@ -108,15 +108,18 @@ export function getJSONSchemaModel(
         definition.properties.forInclude = {
             type: 'object',
             properties: {
-                select: Object.keys(builtProperties).reduce(
-                    (acc: Record<string, JSONSchema7Definition>, key) => {
-                        acc[key] = {
-                            type: 'boolean',
-                        }
-                        return acc
-                    },
-                    {},
-                ),
+                select: {
+                    type: 'object',
+                    properties: Object.keys(builtProperties).reduce(
+                        (acc: Record<string, JSONSchema7Definition>, key) => {
+                            acc[key] = {
+                                type: 'boolean',
+                            }
+                            return acc
+                        },
+                        {},
+                    ),
+                },
                 where: { $ref: `#/properties/where` },
             },
         }

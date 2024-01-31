@@ -268,32 +268,35 @@ describe('JSON Schema Generator', () => {
                                 type: 'object',
                                 properties: {
                                     select: {
-                                        id: {
-                                            type: 'boolean',
-                                        },
-                                        createdAt: {
-                                            type: 'boolean',
-                                        },
-                                        email: {
-                                            type: 'boolean',
-                                        },
-                                        weight: {
-                                            type: 'boolean',
-                                        },
-                                        is18: {
-                                            type: 'boolean',
-                                        },
-                                        name: {
-                                            type: 'boolean',
-                                        },
-                                        role: {
-                                            type: 'boolean',
-                                        },
-                                        keywords: {
-                                            type: 'boolean',
-                                        },
-                                        biography: {
-                                            type: 'boolean',
+                                        type: 'object',
+                                        properties: {
+                                            id: {
+                                                type: 'boolean',
+                                            },
+                                            createdAt: {
+                                                type: 'boolean',
+                                            },
+                                            email: {
+                                                type: 'boolean',
+                                            },
+                                            weight: {
+                                                type: 'boolean',
+                                            },
+                                            is18: {
+                                                type: 'boolean',
+                                            },
+                                            name: {
+                                                type: 'boolean',
+                                            },
+                                            role: {
+                                                type: 'boolean',
+                                            },
+                                            keywords: {
+                                                type: 'boolean',
+                                            },
+                                            biography: {
+                                                type: 'boolean',
+                                            },
                                         },
                                     },
                                     where: {
@@ -400,8 +403,11 @@ describe('JSON Schema Generator', () => {
                                 type: 'object',
                                 properties: {
                                     select: {
-                                        id: {
-                                            type: 'boolean',
+                                        type: 'object',
+                                        properties: {
+                                            id: {
+                                                type: 'boolean',
+                                            },
                                         },
                                     },
                                     where: {
@@ -713,35 +719,38 @@ describe('JSON Schema Generator', () => {
                                 type: 'object',
                                 properties: {
                                     select: {
-                                        id: {
-                                            type: 'boolean',
-                                        },
-                                        createdAt: {
-                                            type: 'boolean',
-                                        },
-                                        email: {
-                                            type: 'boolean',
-                                        },
-                                        weight: {
-                                            type: 'boolean',
-                                        },
-                                        is18: {
-                                            type: 'boolean',
-                                        },
-                                        name: {
-                                            type: 'boolean',
-                                        },
-                                        successorId: {
-                                            type: 'boolean',
-                                        },
-                                        role: {
-                                            type: 'boolean',
-                                        },
-                                        keywords: {
-                                            type: 'boolean',
-                                        },
-                                        biography: {
-                                            type: 'boolean',
+                                        type: 'object',
+                                        properties: {
+                                            id: {
+                                                type: 'boolean',
+                                            },
+                                            createdAt: {
+                                                type: 'boolean',
+                                            },
+                                            email: {
+                                                type: 'boolean',
+                                            },
+                                            weight: {
+                                                type: 'boolean',
+                                            },
+                                            is18: {
+                                                type: 'boolean',
+                                            },
+                                            name: {
+                                                type: 'boolean',
+                                            },
+                                            successorId: {
+                                                type: 'boolean',
+                                            },
+                                            role: {
+                                                type: 'boolean',
+                                            },
+                                            keywords: {
+                                                type: 'boolean',
+                                            },
+                                            biography: {
+                                                type: 'boolean',
+                                            },
                                         },
                                     },
                                     where: {
@@ -867,11 +876,14 @@ describe('JSON Schema Generator', () => {
                                 type: 'object',
                                 properties: {
                                     select: {
-                                        id: {
-                                            type: 'boolean',
-                                        },
-                                        userId: {
-                                            type: 'boolean',
+                                        type: 'object',
+                                        properties: {
+                                            id: {
+                                                type: 'boolean',
+                                            },
+                                            userId: {
+                                                type: 'boolean',
+                                            },
                                         },
                                     },
                                     where: {
@@ -1182,32 +1194,35 @@ describe('JSON Schema Generator', () => {
                                 type: 'object',
                                 properties: {
                                     select: {
-                                        id: {
-                                            type: 'boolean',
-                                        },
-                                        createdAt: {
-                                            type: 'boolean',
-                                        },
-                                        email: {
-                                            type: 'boolean',
-                                        },
-                                        weight: {
-                                            type: 'boolean',
-                                        },
-                                        is18: {
-                                            type: 'boolean',
-                                        },
-                                        name: {
-                                            type: 'boolean',
-                                        },
-                                        role: {
-                                            type: 'boolean',
-                                        },
-                                        keywords: {
-                                            type: 'boolean',
-                                        },
-                                        biography: {
-                                            type: 'boolean',
+                                        type: 'object',
+                                        properties: {
+                                            id: {
+                                                type: 'boolean',
+                                            },
+                                            createdAt: {
+                                                type: 'boolean',
+                                            },
+                                            email: {
+                                                type: 'boolean',
+                                            },
+                                            weight: {
+                                                type: 'boolean',
+                                            },
+                                            is18: {
+                                                type: 'boolean',
+                                            },
+                                            name: {
+                                                type: 'boolean',
+                                            },
+                                            role: {
+                                                type: 'boolean',
+                                            },
+                                            keywords: {
+                                                type: 'boolean',
+                                            },
+                                            biography: {
+                                                type: 'boolean',
+                                            },
                                         },
                                     },
                                     where: {
@@ -1316,8 +1331,11 @@ describe('JSON Schema Generator', () => {
                                 type: 'object',
                                 properties: {
                                     select: {
-                                        id: {
-                                            type: 'boolean',
+                                        type: 'object',
+                                        properties: {
+                                            id: {
+                                                type: 'boolean',
+                                            },
                                         },
                                     },
                                     where: {
@@ -1674,32 +1692,35 @@ describe('JSON Schema Generator', () => {
                                 type: 'object',
                                 properties: {
                                     select: {
-                                        id: {
-                                            type: 'boolean',
-                                        },
-                                        createdAt: {
-                                            type: 'boolean',
-                                        },
-                                        email: {
-                                            type: 'boolean',
-                                        },
-                                        weight: {
-                                            type: 'boolean',
-                                        },
-                                        is18: {
-                                            type: 'boolean',
-                                        },
-                                        name: {
-                                            type: 'boolean',
-                                        },
-                                        role: {
-                                            type: 'boolean',
-                                        },
-                                        keywords: {
-                                            type: 'boolean',
-                                        },
-                                        biography: {
-                                            type: 'boolean',
+                                        type: 'object',
+                                        properties: {
+                                            id: {
+                                                type: 'boolean',
+                                            },
+                                            createdAt: {
+                                                type: 'boolean',
+                                            },
+                                            email: {
+                                                type: 'boolean',
+                                            },
+                                            weight: {
+                                                type: 'boolean',
+                                            },
+                                            is18: {
+                                                type: 'boolean',
+                                            },
+                                            name: {
+                                                type: 'boolean',
+                                            },
+                                            role: {
+                                                type: 'boolean',
+                                            },
+                                            keywords: {
+                                                type: 'boolean',
+                                            },
+                                            biography: {
+                                                type: 'boolean',
+                                            },
                                         },
                                     },
                                     where: {
@@ -1806,8 +1827,11 @@ describe('JSON Schema Generator', () => {
                                 type: 'object',
                                 properties: {
                                     select: {
-                                        id: {
-                                            type: 'boolean',
+                                        type: 'object',
+                                        properties: {
+                                            id: {
+                                                type: 'boolean',
+                                            },
                                         },
                                     },
                                     where: {
@@ -2098,32 +2122,35 @@ describe('JSON Schema Generator', () => {
                                 type: 'object',
                                 properties: {
                                     select: {
-                                        id: {
-                                            type: 'boolean',
-                                        },
-                                        createdAt: {
-                                            type: 'boolean',
-                                        },
-                                        email: {
-                                            type: 'boolean',
-                                        },
-                                        weight: {
-                                            type: 'boolean',
-                                        },
-                                        is18: {
-                                            type: 'boolean',
-                                        },
-                                        name: {
-                                            type: 'boolean',
-                                        },
-                                        role: {
-                                            type: 'boolean',
-                                        },
-                                        keywords: {
-                                            type: 'boolean',
-                                        },
-                                        biography: {
-                                            type: 'boolean',
+                                        type: 'object',
+                                        properties: {
+                                            id: {
+                                                type: 'boolean',
+                                            },
+                                            createdAt: {
+                                                type: 'boolean',
+                                            },
+                                            email: {
+                                                type: 'boolean',
+                                            },
+                                            weight: {
+                                                type: 'boolean',
+                                            },
+                                            is18: {
+                                                type: 'boolean',
+                                            },
+                                            name: {
+                                                type: 'boolean',
+                                            },
+                                            role: {
+                                                type: 'boolean',
+                                            },
+                                            keywords: {
+                                                type: 'boolean',
+                                            },
+                                            biography: {
+                                                type: 'boolean',
+                                            },
                                         },
                                     },
                                     where: {
@@ -2230,8 +2257,11 @@ describe('JSON Schema Generator', () => {
                                 type: 'object',
                                 properties: {
                                     select: {
-                                        id: {
-                                            type: 'boolean',
+                                        type: 'object',
+                                        properties: {
+                                            id: {
+                                                type: 'boolean',
+                                            },
                                         },
                                     },
                                     where: {
