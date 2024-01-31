@@ -128,7 +128,7 @@ export function getJSONSchemaModel(
             comparisonOperators: {
                 type: 'object',
                 patternProperties: {
-                    '^(equals|not|in|notIn|lt|gt|lte|gte|contains|search|mode|startsWith|endsWith)$':
+                    '^(equals|not|in|notIn|lt|gt|lte|gte|contains|search|startsWith|endsWith)$':
                         {
                             anyOf: [
                                 { type: 'string' },
