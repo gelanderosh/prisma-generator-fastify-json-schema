@@ -1,3 +1,43 @@
+## [2.0.0-beta.1](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/compare/v1.1.5...v2.0.0-beta.1) (2024-01-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* **generator:** Removed the capacity to allow single schema file generation, removed relation fields entirely as they have no use in fastify.
+* **generator:** Removed the capacity to allow single schema file generation, removed relation fields entirely as they have no use in fastify.
+* **generator:** Removed the capacity to allow single schema file generation, removed relation fields entirely as they have no use in fastify.
+
+### perf
+
+* **generator:** Rewrote most of the functionalities of the plugin. ([d31df99](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/d31df99eab5c285c29c99796facaf79b873d3a55))
+* **generator:** Rewrote most of the functionalities of the plugin. ([23602c3](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/23602c35c365972cc8c3fd64a77c7564b3a8446b))
+* **generator:** Rewrote most of the functionalities of the plugin. ([cde32f8](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/cde32f86c2e5eb7697d1c4926fbccf9471ab2cd6))
+
+
+### Features
+
+* **schema:** Add ability to generate a schema with nested schema with required attributes and not required. ([f9cacce](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/f9cacce448c2ca5238d70031100500308bab518e))
+
+
+### Bug Fixes
+
+* **build:** Fixed package-lock.json so it can build. ([9cc6b14](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/9cc6b140222226527e9ed2f5ead850383509430c))
+* **build:** Fixed package-lock.json so it can build. ([41bb5da](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/41bb5da99e54846cb6a9b7b9c13ea2cd2d543446))
+
+
+### Dependencies and Other Build Updates
+
+* **deps:** bump @prisma/generator-helper from 5.8.1 to 5.9.0 ([79aafaf](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/79aafaf38c30b3819a3395100cc62cda48102904))
+* **deps:** bump @prisma/internals from 5.8.1 to 5.9.0 ([75726e3](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/75726e34e4bc8e0a494e68db67a3df3fccb77bc8))
+* **dev-deps:** bump @prisma/client from 5.8.1 to 5.9.0 ([a6f27bb](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/a6f27bb3939b84588f643b7164d33ae46578c8a6))
+* **dev-deps:** bump @swc/cli from 0.3.2 to 0.3.5 ([10b1b47](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/10b1b47a44dea6e7fb2e5ad5ac165c413642a79b))
+* **dev-deps:** bump @swc/core from 1.3.106 to 1.3.107 ([bd3a50c](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/bd3a50c5dc70e8755a1eaa9703fdecd112139b28))
+* **dev-deps:** bump @types/node from 20.11.7 to 20.11.10 ([0638ebf](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/0638ebf504653d5274dcb4ad6fdd612d2f4c5e31))
+* **dev-deps:** bump @typescript-eslint/eslint-plugin ([c486e69](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/c486e692731dc39baa2bf14d9dc3c8ca02c3c0c7))
+* **dev-deps:** bump @typescript-eslint/parser from 6.19.1 to 6.20.0 ([7b7bb6e](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/7b7bb6efe0df25addb1b7038ddba65f648d1c01e))
+* **dev-deps:** bump browserslist from 4.22.2 to 4.22.3 ([1dca735](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/1dca735d8d678c9cbb657042de576168ea115e28))
+* **dev-deps:** bump prisma from 5.8.1 to 5.9.0 ([693b189](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/693b18996d825dd609a2d886528c439355dda96f))
+
 ## [1.1.5](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/compare/v1.1.4...v1.1.5) (2024-01-26)
 
 ## [1.1.4-beta.3](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/compare/v1.1.4-beta.2...v1.1.4-beta.3) (2024-01-26)
