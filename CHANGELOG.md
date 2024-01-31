@@ -1,3 +1,10 @@
+## [2.0.0-beta.4](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2024-01-31)
+
+
+### Bug Fixes
+
+* **package:** Fix [#for](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/issues/for)Include/select schema which was missing type and properties props. ([fd86e7d](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/fd86e7dfe7a49cf7420d9ec5ceb3879d12af8eb9))
+
 ## [2.0.0-beta.3](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2024-01-31)
 
 
