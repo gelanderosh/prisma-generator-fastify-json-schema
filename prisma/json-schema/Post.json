@@ -46,8 +46,11 @@
       "type": "object",
       "properties": {
         "select": {
-          "id": {
-            "type": "boolean"
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "boolean"
+            }
           }
         },
         "where": {
