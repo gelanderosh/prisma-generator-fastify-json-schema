@@ -1,3 +1,10 @@
+## [2.0.0-beta.2](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2024-01-31)
+
+
+### Bug Fixes
+
+* **package:** Fixed bin route. ([97fd467](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/97fd46749d8cad9ac6b18b724254d9dea79d580b))
+
 ## [2.0.0-beta.1](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/compare/v1.1.5...v2.0.0-beta.1) (2024-01-31)
 
 
