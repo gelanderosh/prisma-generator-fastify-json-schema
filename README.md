@@ -10,6 +10,8 @@
 
 This is a fork of [prisma-json-schema-generator](https://github.com/valentinpalkovic/prisma-json-schema-generator) by [Valentin Palkovic](https://github.com/valentinpalkovic) that adds support for [Fastify](https://www.fastify.io/) generating individual schemas for each model in version 7 of the specification (https://json-schema.org/).
 
+This plugin does not support generating a single schema for the entire database nor has been tested on mongo specific functionalities.
+
 ## Getting Started
 
 **1. Install**
@@ -43,15 +45,14 @@ Additional options
 generator jsonSchema {
   provider = "prisma-generator-fastify-json-schema"
   keepRelationScalarFields = "true"
-  schemaId = "some-schema-id"
-  includeRequiredFields = "true"
   persistOriginalType = "true"
+  includeRequiredFields = "true"
   forceAnyOf = "true"
   generateExportFile= "true"
   exportFileName = "schemas"
   exportAsEsModule = "true"
   useAssert = "true"
-  ignoreDefaults = "true"
+  exportAsTs = "true"
 }
 ```
 
@@ -60,15 +61,14 @@ The generator currently supports a few options
 | Key                      | Default Value | Description                                                                                                                                                                                            |
 |--------------------------|---------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | keepRelationScalarFields | "false"       | By default, the JSON Schema that's generated will output only objects for related model records. If set to "true", this will cause the generator to also output foreign key fields for related records |
-| keepRelationFields       | "true"        | Determines whether to include fields from related models in the generated schema. Setting it to `"false"` allows excluding related model fields from the schema.                                       |
-| includeRequiredFields    | "false"       | If this flag is `"true"` all required scalar prisma fields that do not have a default value, will be added to the `required` properties field for that schema definition.                              |
 | persistOriginalType      | "false"       | If this flag is `"true"` the original type will be added under the property key "originalType"                                                                                                         |
+| includeRequiredFields    | "false"       | If this flag is `"true"` all required scalar prisma fields that do not have a default value, will be added to the `required` properties field for that schema definition.                              |
 | forceAnyOf               | "false"       | If this flag is `"true"` the union types will be forced to use `anyOf`. Check [contradictory types](https://ajv.js.org/strict-mode.html#contradictory-types) for details                               |
-| generateExportFile       | "false"       | If this flag is `"true"` an index.ts file that imports and then exports all of the schemas as an object will be generated                                                                              |
+| generateExportFile       | "true"        | If this flag is `"true"` an index.ts file that imports and then exports all of the schemas as an object will be generated                                                                              |
 | exportFileName           | "index.ts"    | The name of the export file that will be generated if `generateExportFile` is set to `"true"`                                                                                                          |
 | exportAsEsModule         | "false"       | If this flag is `"true"` the export file will be generated as an ES module if `generateExportFile` is set to `"true"`                                                                                  |
-| useAssert                | "false"       | If this flag is `"true"` the generated index file will use "assert" on json imports otherwise it will use "with" if both `generateExportFile` and `exportAsEsModule` are set to true.                  |
-
+| useAssert                | "true"        | If this flag is `"true"` the generated index file will use "assert" on json imports otherwise it will use "with" if both `generateExportFile` and `exportAsEsModule` are set to true.                  |
+| exportAsTs               | "true"        | If this flag is `"true"` the export file will be generated as a TypeScript file if `generateExportFile` is set to `"true"`                                                                             |
 **3. Run generation**
 
 prisma:

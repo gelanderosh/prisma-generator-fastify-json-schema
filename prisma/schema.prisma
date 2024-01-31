@@ -4,10 +4,7 @@ generator client {
 
 generator docs {
   provider           = "node ./dist/src/index.js"
-  generateExportFile = true
-  useAssert          = false
-  ignoreDefaults     = true
-  onlyWithoutRequired   = true
+  forceAnyOf   = false
 }
 
 datasource db {

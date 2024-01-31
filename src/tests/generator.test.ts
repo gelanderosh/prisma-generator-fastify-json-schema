@@ -1,152 +1,456 @@
 import { getDMMF } from '@prisma/internals'
 import { transformDMMF } from '../generator/transformDMMF'
 
-const datamodelPostGresQL = /* Prisma */ `
-	datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
-  }
+const datamodel = /* Prisma */ `
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
 
-  model User {
-    id               Int      @id @default(autoincrement())
-    // Double Slash Comment: Will NOT show up in JSON schema
-    createdAt        DateTime @default(now())
-    /// Triple Slash Comment: Will show up in JSON schema [EMAIL]
-    email            String   @unique
-    number           BigInt   @default(34534535435353)
-    favouriteDecimal Decimal  @default(22.222222)
-    bytes            Bytes /// Triple Slash Inline Comment: Will show up in JSON schema [BYTES]
-    weight           Float?   @default(333.33)
-    is18             Boolean? @default(false)
-    name             String?  @default("Bela B")
-    successorId      Int?     @unique @default(123)
-    successor        User?    @relation("BlogOwnerHistory", fields: [successorId], references: [id])
-    predecessor      User?    @relation("BlogOwnerHistory")
-    role             Role     @default(USER)
-    posts            Post[]
-    keywords         String[]
-    biography        Json
-  }
+model User {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  email       String   @unique
+  weight      Float?
+  is18        Boolean?
+  name        String?
+  successorId Int?     @unique
+  successor   User?    @relation("BlogOwnerHistory", fields: [successorId], references: [id])
+  predecessor User?    @relation("BlogOwnerHistory")
+  role        Role     @default(USER)
+  posts       Post[]
+  keywords    String[]
+  biography   Json
+}
 
-  model Post {
-    id     Int   @id @default(autoincrement())
-    user   User? @relation(fields: [userId], references: [id])
-    userId Int?
-  }
+model Post {
+  id     Int   @id @default(autoincrement())
+  user   User? @relation(fields: [userId], references: [id])
+  userId Int?
+}
 
-  enum Role {
-    USER
-    ADMIN
-  }
-`
-
-const datamodelMongoDB = /* Prisma */ `
-  datasource db {
-    provider = "mongodb"
-    url      = env("DATABASE_URL")
-  }
-
-  model User {
-    id     String  @id @default(auto()) @map("_id") @db.ObjectId
-    photos Photo[]
-  }
-
-  type Photo {
-    height Int    @default(200)
-    width  Int    @default(100)
-    url    String
-  }
+enum Role {
+  USER
+  ADMIN
+}
 `
 
 describe('JSON Schema Generator', () => {
     describe('db postgresql', () => {
         it('returns JSON Schema for given models', async () => {
-            const dmmf = await getDMMF({ datamodel: datamodelPostGresQL })
+            const dmmf = await getDMMF({ datamodel: datamodel })
             expect(transformDMMF(dmmf)).toEqual([
                 [
                     'User',
                     {
                         $id: 'User',
-                        $schema: 'http://json-schema.org/draft-07/schema#',
+                        type: 'object',
                         properties: {
-                            biography: {
-                                type: [
-                                    'number',
-                                    'string',
-                                    'boolean',
-                                    'object',
-                                    'array',
-                                    'null',
-                                ],
+                            withoutRequired: {
+                                id: {
+                                    type: 'integer',
+                                },
+                                createdAt: {
+                                    type: 'string',
+                                    format: 'date-time',
+                                },
+                                email: {
+                                    type: 'string',
+                                },
+                                weight: {
+                                    type: ['number', 'null'],
+                                },
+                                is18: {
+                                    type: ['boolean', 'null'],
+                                },
+                                name: {
+                                    type: ['string', 'null'],
+                                },
+                                role: {
+                                    type: 'string',
+                                    default: 'USER',
+                                    enum: ['USER', 'ADMIN'],
+                                },
+                                keywords: {
+                                    type: 'array',
+                                    items: {
+                                        type: 'string',
+                                    },
+                                },
+                                biography: {
+                                    type: [
+                                        'number',
+                                        'string',
+                                        'boolean',
+                                        'object',
+                                        'array',
+                                        'null',
+                                    ],
+                                },
                             },
-                            bytes: {
-                                description:
-                                    'Triple Slash Inline Comment: Will show up in JSON schema [BYTES]',
-                                type: 'string',
+                            withRequired: {
+                                id: {
+                                    type: 'integer',
+                                },
+                                createdAt: {
+                                    type: 'string',
+                                    format: 'date-time',
+                                },
+                                email: {
+                                    type: 'string',
+                                },
+                                weight: {
+                                    type: ['number', 'null'],
+                                },
+                                is18: {
+                                    type: ['boolean', 'null'],
+                                },
+                                name: {
+                                    type: ['string', 'null'],
+                                },
+                                role: {
+                                    type: 'string',
+                                    default: 'USER',
+                                    enum: ['USER', 'ADMIN'],
+                                },
+                                keywords: {
+                                    type: 'array',
+                                    items: {
+                                        type: 'string',
+                                    },
+                                },
+                                biography: {
+                                    type: [
+                                        'number',
+                                        'string',
+                                        'boolean',
+                                        'object',
+                                        'array',
+                                        'null',
+                                    ],
+                                },
+                                required: ['email', 'keywords', 'biography'],
                             },
-                            createdAt: { format: 'date-time', type: 'string' },
-                            email: {
-                                description:
-                                    'Triple Slash Comment: Will show up in JSON schema [EMAIL]',
-                                type: 'string',
+                            where: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    createdAt: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    email: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    weight: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    is18: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    name: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    role: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    keywords: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    biography: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                },
                             },
-                            favouriteDecimal: {
-                                default: 22.222222,
-                                type: 'number',
+                            select: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'boolean',
+                                    },
+                                    createdAt: {
+                                        type: 'boolean',
+                                    },
+                                    email: {
+                                        type: 'boolean',
+                                    },
+                                    weight: {
+                                        type: 'boolean',
+                                    },
+                                    is18: {
+                                        type: 'boolean',
+                                    },
+                                    name: {
+                                        type: 'boolean',
+                                    },
+                                    role: {
+                                        type: 'boolean',
+                                    },
+                                    keywords: {
+                                        type: 'boolean',
+                                    },
+                                    biography: {
+                                        type: 'boolean',
+                                    },
+                                },
                             },
-                            id: { type: 'integer' },
-                            is18: { default: false, type: ['boolean', 'null'] },
-                            keywords: {
-                                items: { type: 'string' },
-                                type: 'array',
-                            },
-                            name: {
-                                default: 'Bela B',
-                                type: ['string', 'null'],
-                            },
-                            number: {
-                                default: '34534535435353',
-                                type: 'integer',
-                            },
-                            posts: { items: { $ref: 'Post' }, type: 'array' },
-                            predecessor: {
-                                anyOf: [{ $ref: 'User' }, { type: 'null' }],
-                            },
-                            role: {
-                                default: 'USER',
-                                enum: ['USER', 'ADMIN'],
-                                type: 'string',
-                            },
-                            successor: {
-                                anyOf: [{ $ref: 'User' }, { type: 'null' }],
-                            },
-                            weight: {
-                                default: 333.33,
-                                type: ['number', 'null'],
+                            forInclude: {
+                                type: 'object',
+                                properties: {
+                                    select: {
+                                        id: {
+                                            type: 'boolean',
+                                        },
+                                        createdAt: {
+                                            type: 'boolean',
+                                        },
+                                        email: {
+                                            type: 'boolean',
+                                        },
+                                        weight: {
+                                            type: 'boolean',
+                                        },
+                                        is18: {
+                                            type: 'boolean',
+                                        },
+                                        name: {
+                                            type: 'boolean',
+                                        },
+                                        role: {
+                                            type: 'boolean',
+                                        },
+                                        keywords: {
+                                            type: 'boolean',
+                                        },
+                                        biography: {
+                                            type: 'boolean',
+                                        },
+                                    },
+                                    where: {
+                                        $ref: '#/properties/where',
+                                    },
+                                },
                             },
                         },
-                        type: 'object',
+                        definitions: {
+                            comparisonOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(equals|not|in|notIn|lt|gt|lte|gte|contains|search|mode|startsWith|endsWith)$':
+                                        {
+                                            anyOf: [
+                                                {
+                                                    type: 'string',
+                                                },
+                                                {
+                                                    type: 'number',
+                                                },
+                                                {
+                                                    type: 'null',
+                                                },
+                                            ],
+                                        },
+                                },
+                                properties: {
+                                    mode: {
+                                        anyOf: [
+                                            {
+                                                type: 'string',
+                                                enum: ['insensitive'],
+                                            },
+                                            {
+                                                type: 'null',
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                            logicalOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(AND|OR|NOT)$': {
+                                        type: 'array',
+                                        items: {
+                                            $ref: '#/properties/where',
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        $schema: 'http://json-schema.org/draft-07/schema#',
                     },
                 ],
                 [
                     'Post',
                     {
                         $id: 'Post',
-                        $schema: 'http://json-schema.org/draft-07/schema#',
+                        type: 'object',
                         properties: {
-                            id: { type: 'integer' },
-                            user: {
-                                anyOf: [{ $ref: 'User' }, { type: 'null' }],
+                            withoutRequired: {
+                                id: {
+                                    type: 'integer',
+                                },
+                            },
+                            withRequired: {
+                                id: {
+                                    type: 'integer',
+                                },
+                                required: [],
+                            },
+                            where: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                            select: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'boolean',
+                                    },
+                                },
+                            },
+                            forInclude: {
+                                type: 'object',
+                                properties: {
+                                    select: {
+                                        id: {
+                                            type: 'boolean',
+                                        },
+                                    },
+                                    where: {
+                                        $ref: '#/properties/where',
+                                    },
+                                },
                             },
                         },
-                        type: 'object',
+                        definitions: {
+                            comparisonOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(equals|not|in|notIn|lt|gt|lte|gte|contains|search|mode|startsWith|endsWith)$':
+                                        {
+                                            anyOf: [
+                                                {
+                                                    type: 'string',
+                                                },
+                                                {
+                                                    type: 'number',
+                                                },
+                                                {
+                                                    type: 'null',
+                                                },
+                                            ],
+                                        },
+                                },
+                                properties: {
+                                    mode: {
+                                        anyOf: [
+                                            {
+                                                type: 'string',
+                                                enum: ['insensitive'],
+                                            },
+                                            {
+                                                type: 'null',
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                            logicalOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(AND|OR|NOT)$': {
+                                        type: 'array',
+                                        items: {
+                                            $ref: '#/properties/where',
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        $schema: 'http://json-schema.org/draft-07/schema#',
                     },
                 ],
             ])
         })
 
         it('keeps relation scalar fields if requested', async () => {
-            const dmmf = await getDMMF({ datamodel: datamodelPostGresQL })
+            const dmmf = await getDMMF({ datamodel: datamodel })
             expect(
                 transformDMMF(dmmf, { keepRelationScalarFields: 'true' }),
             ).toEqual([
@@ -154,477 +458,457 @@ describe('JSON Schema Generator', () => {
                     'User',
                     {
                         $id: 'User',
-                        $schema: 'http://json-schema.org/draft-07/schema#',
-                        properties: {
-                            biography: {
-                                type: [
-                                    'number',
-                                    'string',
-                                    'boolean',
-                                    'object',
-                                    'array',
-                                    'null',
-                                ],
-                            },
-                            bytes: {
-                                description:
-                                    'Triple Slash Inline Comment: Will show up in JSON schema [BYTES]',
-                                type: 'string',
-                            },
-                            createdAt: { format: 'date-time', type: 'string' },
-                            email: {
-                                description:
-                                    'Triple Slash Comment: Will show up in JSON schema [EMAIL]',
-                                type: 'string',
-                            },
-                            favouriteDecimal: {
-                                default: 22.222222,
-                                type: 'number',
-                            },
-                            id: { type: 'integer' },
-                            is18: { default: false, type: ['boolean', 'null'] },
-                            keywords: {
-                                items: { type: 'string' },
-                                type: 'array',
-                            },
-                            name: {
-                                default: 'Bela B',
-                                type: ['string', 'null'],
-                            },
-                            number: {
-                                default: '34534535435353',
-                                type: 'integer',
-                            },
-                            posts: { items: { $ref: 'Post' }, type: 'array' },
-                            predecessor: {
-                                anyOf: [{ $ref: 'User' }, { type: 'null' }],
-                            },
-                            role: {
-                                default: 'USER',
-                                enum: ['USER', 'ADMIN'],
-                                type: 'string',
-                            },
-                            successor: {
-                                anyOf: [{ $ref: 'User' }, { type: 'null' }],
-                            },
-                            successorId: {
-                                default: 123,
-                                type: ['integer', 'null'],
-                            },
-                            weight: {
-                                default: 333.33,
-                                type: ['number', 'null'],
-                            },
-                        },
                         type: 'object',
-                    },
-                ],
-                [
-                    'Post',
-                    {
-                        $id: 'Post',
-                        $schema: 'http://json-schema.org/draft-07/schema#',
                         properties: {
-                            id: { type: 'integer' },
-                            user: {
-                                anyOf: [{ $ref: 'User' }, { type: 'null' }],
-                            },
-                            userId: { type: ['integer', 'null'] },
-                        },
-                        type: 'object',
-                    },
-                ],
-            ])
-        })
-
-        it('keeps relation fields by default', async () => {
-            const dmmf = await getDMMF({ datamodel: datamodelPostGresQL })
-            expect(transformDMMF(dmmf)).toEqual([
-                [
-                    'User',
-                    {
-                        $id: 'User',
-                        $schema: 'http://json-schema.org/draft-07/schema#',
-                        properties: {
-                            biography: {
-                                type: [
-                                    'number',
-                                    'string',
-                                    'boolean',
-                                    'object',
-                                    'array',
-                                    'null',
-                                ],
-                            },
-                            bytes: {
-                                description:
-                                    'Triple Slash Inline Comment: Will show up in JSON schema [BYTES]',
-                                type: 'string',
-                            },
-                            createdAt: {
-                                format: 'date-time',
-                                type: 'string',
-                            },
-                            email: {
-                                description:
-                                    'Triple Slash Comment: Will show up in JSON schema [EMAIL]',
-                                type: 'string',
-                            },
-                            favouriteDecimal: {
-                                default: 22.222222,
-                                type: 'number',
-                            },
-                            id: {
-                                type: 'integer',
-                            },
-                            is18: {
-                                default: false,
-                                type: ['boolean', 'null'],
-                            },
-                            keywords: {
-                                items: {
+                            withoutRequired: {
+                                id: {
+                                    type: 'integer',
+                                },
+                                createdAt: {
+                                    type: 'string',
+                                    format: 'date-time',
+                                },
+                                email: {
                                     type: 'string',
                                 },
-                                type: 'array',
-                            },
-                            name: {
-                                default: 'Bela B',
-                                type: ['string', 'null'],
-                            },
-                            number: {
-                                default: '34534535435353',
-                                type: 'integer',
-                            },
-                            posts: {
-                                items: {
-                                    $ref: 'Post',
+                                weight: {
+                                    type: ['number', 'null'],
                                 },
-                                type: 'array',
-                            },
-                            predecessor: {
-                                anyOf: [
-                                    {
-                                        $ref: 'User',
+                                is18: {
+                                    type: ['boolean', 'null'],
+                                },
+                                name: {
+                                    type: ['string', 'null'],
+                                },
+                                successorId: {
+                                    type: ['integer', 'null'],
+                                },
+                                role: {
+                                    type: 'string',
+                                    default: 'USER',
+                                    enum: ['USER', 'ADMIN'],
+                                },
+                                keywords: {
+                                    type: 'array',
+                                    items: {
+                                        type: 'string',
                                     },
-                                    {
-                                        type: 'null',
-                                    },
-                                ],
+                                },
+                                biography: {
+                                    type: [
+                                        'number',
+                                        'string',
+                                        'boolean',
+                                        'object',
+                                        'array',
+                                        'null',
+                                    ],
+                                },
                             },
-                            role: {
-                                default: 'USER',
-                                enum: ['USER', 'ADMIN'],
-                                type: 'string',
-                            },
-                            successor: {
-                                anyOf: [
-                                    {
-                                        $ref: 'User',
-                                    },
-                                    {
-                                        type: 'null',
-                                    },
-                                ],
-                            },
-                            weight: {
-                                default: 333.33,
-                                type: ['number', 'null'],
-                            },
-                        },
-                        type: 'object',
-                    },
-                ],
-                [
-                    'Post',
-                    {
-                        $id: 'Post',
-                        $schema: 'http://json-schema.org/draft-07/schema#',
-                        properties: {
-                            id: {
-                                type: 'integer',
-                            },
-                            user: {
-                                anyOf: [
-                                    {
-                                        $ref: 'User',
-                                    },
-                                    {
-                                        type: 'null',
-                                    },
-                                ],
-                            },
-                        },
-                        type: 'object',
-                    },
-                ],
-            ])
-        })
-
-        it('skip relation fields if requested', async () => {
-            const dmmf = await getDMMF({ datamodel: datamodelPostGresQL })
-            expect(
-                transformDMMF(dmmf, { keepRelationFields: 'false' }),
-            ).toEqual([
-                [
-                    'User',
-                    {
-                        $id: 'User',
-                        $schema: 'http://json-schema.org/draft-07/schema#',
-                        properties: {
-                            biography: {
-                                type: [
-                                    'number',
-                                    'string',
-                                    'boolean',
-                                    'object',
-                                    'array',
-                                    'null',
-                                ],
-                            },
-                            bytes: {
-                                description:
-                                    'Triple Slash Inline Comment: Will show up in JSON schema [BYTES]',
-                                type: 'string',
-                            },
-                            createdAt: {
-                                format: 'date-time',
-                                type: 'string',
-                            },
-                            email: {
-                                description:
-                                    'Triple Slash Comment: Will show up in JSON schema [EMAIL]',
-                                type: 'string',
-                            },
-                            favouriteDecimal: {
-                                default: 22.222222,
-                                type: 'number',
-                            },
-                            id: {
-                                type: 'integer',
-                            },
-                            is18: {
-                                default: false,
-                                type: ['boolean', 'null'],
-                            },
-                            keywords: {
-                                items: {
+                            withRequired: {
+                                id: {
+                                    type: 'integer',
+                                },
+                                createdAt: {
+                                    type: 'string',
+                                    format: 'date-time',
+                                },
+                                email: {
                                     type: 'string',
                                 },
-                                type: 'array',
+                                weight: {
+                                    type: ['number', 'null'],
+                                },
+                                is18: {
+                                    type: ['boolean', 'null'],
+                                },
+                                name: {
+                                    type: ['string', 'null'],
+                                },
+                                successorId: {
+                                    type: ['integer', 'null'],
+                                },
+                                role: {
+                                    type: 'string',
+                                    default: 'USER',
+                                    enum: ['USER', 'ADMIN'],
+                                },
+                                keywords: {
+                                    type: 'array',
+                                    items: {
+                                        type: 'string',
+                                    },
+                                },
+                                biography: {
+                                    type: [
+                                        'number',
+                                        'string',
+                                        'boolean',
+                                        'object',
+                                        'array',
+                                        'null',
+                                    ],
+                                },
+                                required: ['email', 'keywords', 'biography'],
                             },
-                            name: {
-                                default: 'Bela B',
-                                type: ['string', 'null'],
+                            where: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    createdAt: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    email: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    weight: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    is18: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    name: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    successorId: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    role: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    keywords: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    biography: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                },
                             },
-                            number: {
-                                default: '34534535435353',
-                                type: 'integer',
+                            select: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'boolean',
+                                    },
+                                    createdAt: {
+                                        type: 'boolean',
+                                    },
+                                    email: {
+                                        type: 'boolean',
+                                    },
+                                    weight: {
+                                        type: 'boolean',
+                                    },
+                                    is18: {
+                                        type: 'boolean',
+                                    },
+                                    name: {
+                                        type: 'boolean',
+                                    },
+                                    successorId: {
+                                        type: 'boolean',
+                                    },
+                                    role: {
+                                        type: 'boolean',
+                                    },
+                                    keywords: {
+                                        type: 'boolean',
+                                    },
+                                    biography: {
+                                        type: 'boolean',
+                                    },
+                                },
                             },
-                            role: {
-                                default: 'USER',
-                                enum: ['USER', 'ADMIN'],
-                                type: 'string',
-                            },
-                            weight: {
-                                default: 333.33,
-                                type: ['number', 'null'],
+                            forInclude: {
+                                type: 'object',
+                                properties: {
+                                    select: {
+                                        id: {
+                                            type: 'boolean',
+                                        },
+                                        createdAt: {
+                                            type: 'boolean',
+                                        },
+                                        email: {
+                                            type: 'boolean',
+                                        },
+                                        weight: {
+                                            type: 'boolean',
+                                        },
+                                        is18: {
+                                            type: 'boolean',
+                                        },
+                                        name: {
+                                            type: 'boolean',
+                                        },
+                                        successorId: {
+                                            type: 'boolean',
+                                        },
+                                        role: {
+                                            type: 'boolean',
+                                        },
+                                        keywords: {
+                                            type: 'boolean',
+                                        },
+                                        biography: {
+                                            type: 'boolean',
+                                        },
+                                    },
+                                    where: {
+                                        $ref: '#/properties/where',
+                                    },
+                                },
                             },
                         },
-                        type: 'object',
+                        definitions: {
+                            comparisonOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(equals|not|in|notIn|lt|gt|lte|gte|contains|search|mode|startsWith|endsWith)$':
+                                        {
+                                            anyOf: [
+                                                {
+                                                    type: 'string',
+                                                },
+                                                {
+                                                    type: 'number',
+                                                },
+                                                {
+                                                    type: 'null',
+                                                },
+                                            ],
+                                        },
+                                },
+                                properties: {
+                                    mode: {
+                                        anyOf: [
+                                            {
+                                                type: 'string',
+                                                enum: ['insensitive'],
+                                            },
+                                            {
+                                                type: 'null',
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                            logicalOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(AND|OR|NOT)$': {
+                                        type: 'array',
+                                        items: {
+                                            $ref: '#/properties/where',
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        $schema: 'http://json-schema.org/draft-07/schema#',
                     },
                 ],
                 [
                     'Post',
                     {
                         $id: 'Post',
-                        $schema: 'http://json-schema.org/draft-07/schema#',
+                        type: 'object',
                         properties: {
-                            id: {
-                                type: 'integer',
+                            withoutRequired: {
+                                id: {
+                                    type: 'integer',
+                                },
+                                userId: {
+                                    type: ['integer', 'null'],
+                                },
+                            },
+                            withRequired: {
+                                id: {
+                                    type: 'integer',
+                                },
+                                userId: {
+                                    type: ['integer', 'null'],
+                                },
+                                required: [],
+                            },
+                            where: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    userId: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                            select: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'boolean',
+                                    },
+                                    userId: {
+                                        type: 'boolean',
+                                    },
+                                },
+                            },
+                            forInclude: {
+                                type: 'object',
+                                properties: {
+                                    select: {
+                                        id: {
+                                            type: 'boolean',
+                                        },
+                                        userId: {
+                                            type: 'boolean',
+                                        },
+                                    },
+                                    where: {
+                                        $ref: '#/properties/where',
+                                    },
+                                },
                             },
                         },
-                        type: 'object',
-                    },
-                ],
-            ])
-        })
-
-        it('skip relation fields and keep relation scalar fields if requested', async () => {
-            const dmmf = await getDMMF({ datamodel: datamodelPostGresQL })
-            expect(
-                transformDMMF(dmmf, {
-                    keepRelationFields: 'false',
-                    keepRelationScalarFields: 'true',
-                }),
-            ).toEqual([
-                [
-                    'User',
-                    {
-                        $id: 'User',
-                        $schema: 'http://json-schema.org/draft-07/schema#',
-                        properties: {
-                            biography: {
-                                type: [
-                                    'number',
-                                    'string',
-                                    'boolean',
-                                    'object',
-                                    'array',
-                                    'null',
-                                ],
+                        definitions: {
+                            comparisonOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(equals|not|in|notIn|lt|gt|lte|gte|contains|search|mode|startsWith|endsWith)$':
+                                        {
+                                            anyOf: [
+                                                {
+                                                    type: 'string',
+                                                },
+                                                {
+                                                    type: 'number',
+                                                },
+                                                {
+                                                    type: 'null',
+                                                },
+                                            ],
+                                        },
+                                },
+                                properties: {
+                                    mode: {
+                                        anyOf: [
+                                            {
+                                                type: 'string',
+                                                enum: ['insensitive'],
+                                            },
+                                            {
+                                                type: 'null',
+                                            },
+                                        ],
+                                    },
+                                },
                             },
-                            bytes: {
-                                description:
-                                    'Triple Slash Inline Comment: Will show up in JSON schema [BYTES]',
-                                type: 'string',
-                            },
-                            createdAt: { format: 'date-time', type: 'string' },
-                            email: {
-                                description:
-                                    'Triple Slash Comment: Will show up in JSON schema [EMAIL]',
-                                type: 'string',
-                            },
-                            favouriteDecimal: {
-                                default: 22.222222,
-                                type: 'number',
-                            },
-                            id: { type: 'integer' },
-                            is18: { default: false, type: ['boolean', 'null'] },
-                            keywords: {
-                                items: { type: 'string' },
-                                type: 'array',
-                            },
-                            name: {
-                                default: 'Bela B',
-                                type: ['string', 'null'],
-                            },
-                            number: {
-                                default: '34534535435353',
-                                type: 'integer',
-                            },
-                            role: {
-                                default: 'USER',
-                                enum: ['USER', 'ADMIN'],
-                                type: 'string',
-                            },
-                            successorId: {
-                                default: 123,
-                                type: ['integer', 'null'],
-                            },
-                            weight: {
-                                default: 333.33,
-                                type: ['number', 'null'],
+                            logicalOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(AND|OR|NOT)$': {
+                                        type: 'array',
+                                        items: {
+                                            $ref: '#/properties/where',
+                                        },
+                                    },
+                                },
                             },
                         },
-                        type: 'object',
-                    },
-                ],
-                [
-                    'Post',
-                    {
-                        $id: 'Post',
                         $schema: 'http://json-schema.org/draft-07/schema#',
-                        properties: {
-                            id: { type: 'integer' },
-                            userId: { type: ['integer', 'null'] },
-                        },
-                        type: 'object',
-                    },
-                ],
-            ])
-        })
-
-        it('adds required field if requested', async () => {
-            const dmmf = await getDMMF({ datamodel: datamodelPostGresQL })
-            expect(
-                transformDMMF(dmmf, { includeRequiredFields: 'true' }),
-            ).toEqual([
-                [
-                    'User',
-                    {
-                        $id: 'User',
-                        $schema: 'http://json-schema.org/draft-07/schema#',
-                        properties: {
-                            biography: {
-                                type: [
-                                    'number',
-                                    'string',
-                                    'boolean',
-                                    'object',
-                                    'array',
-                                    'null',
-                                ],
-                            },
-                            bytes: {
-                                description:
-                                    'Triple Slash Inline Comment: Will show up in JSON schema [BYTES]',
-                                type: 'string',
-                            },
-                            createdAt: { format: 'date-time', type: 'string' },
-                            email: {
-                                description:
-                                    'Triple Slash Comment: Will show up in JSON schema [EMAIL]',
-                                type: 'string',
-                            },
-                            favouriteDecimal: {
-                                default: 22.222222,
-                                type: 'number',
-                            },
-                            id: { type: 'integer' },
-                            is18: { default: false, type: ['boolean', 'null'] },
-                            keywords: {
-                                items: { type: 'string' },
-                                type: 'array',
-                            },
-                            name: {
-                                default: 'Bela B',
-                                type: ['string', 'null'],
-                            },
-                            number: {
-                                default: '34534535435353',
-                                type: 'integer',
-                            },
-                            posts: { items: { $ref: 'Post' }, type: 'array' },
-                            predecessor: {
-                                anyOf: [{ $ref: 'User' }, { type: 'null' }],
-                            },
-                            role: {
-                                default: 'USER',
-                                enum: ['USER', 'ADMIN'],
-                                type: 'string',
-                            },
-                            successor: {
-                                anyOf: [{ $ref: 'User' }, { type: 'null' }],
-                            },
-                            weight: {
-                                default: 333.33,
-                                type: ['number', 'null'],
-                            },
-                        },
-                        required: ['email', 'bytes', 'keywords', 'biography'],
-                        type: 'object',
-                    },
-                ],
-                [
-                    'Post',
-                    {
-                        $id: 'Post',
-                        $schema: 'http://json-schema.org/draft-07/schema#',
-                        properties: {
-                            id: { type: 'integer' },
-                            user: {
-                                anyOf: [{ $ref: 'User' }, { type: 'null' }],
-                            },
-                        },
-                        required: [],
-                        type: 'object',
                     },
                 ],
             ])
         })
 
         it('adds original type if requested', async () => {
-            const dmmf = await getDMMF({ datamodel: datamodelPostGresQL })
+            const dmmf = await getDMMF({ datamodel: datamodel })
             expect(
                 transformDMMF(dmmf, { persistOriginalType: 'true' }),
             ).toEqual([
@@ -632,309 +916,1316 @@ describe('JSON Schema Generator', () => {
                     'User',
                     {
                         $id: 'User',
-                        $schema: 'http://json-schema.org/draft-07/schema#',
+                        type: 'object',
                         properties: {
-                            biography: {
-                                originalType: 'Json',
-                                type: [
-                                    'number',
-                                    'string',
-                                    'boolean',
-                                    'object',
-                                    'array',
-                                    'null',
-                                ],
+                            withoutRequired: {
+                                id: {
+                                    type: 'integer',
+                                    originalType: 'Int',
+                                },
+                                createdAt: {
+                                    type: 'string',
+                                    originalType: 'DateTime',
+                                    format: 'date-time',
+                                },
+                                email: {
+                                    type: 'string',
+                                    originalType: 'String',
+                                },
+                                weight: {
+                                    type: ['number', 'null'],
+                                    originalType: 'Float',
+                                },
+                                is18: {
+                                    type: ['boolean', 'null'],
+                                    originalType: 'Boolean',
+                                },
+                                name: {
+                                    type: ['string', 'null'],
+                                    originalType: 'String',
+                                },
+                                role: {
+                                    type: 'string',
+                                    originalType: 'Role',
+                                    default: 'USER',
+                                    enum: ['USER', 'ADMIN'],
+                                },
+                                keywords: {
+                                    type: 'array',
+                                    originalType: 'String',
+                                    items: {
+                                        type: 'string',
+                                    },
+                                },
+                                biography: {
+                                    type: [
+                                        'number',
+                                        'string',
+                                        'boolean',
+                                        'object',
+                                        'array',
+                                        'null',
+                                    ],
+                                    originalType: 'Json',
+                                },
                             },
-                            bytes: {
-                                description:
-                                    'Triple Slash Inline Comment: Will show up in JSON schema [BYTES]',
-                                originalType: 'Bytes',
-                                type: 'string',
+                            withRequired: {
+                                id: {
+                                    type: 'integer',
+                                    originalType: 'Int',
+                                },
+                                createdAt: {
+                                    type: 'string',
+                                    originalType: 'DateTime',
+                                    format: 'date-time',
+                                },
+                                email: {
+                                    type: 'string',
+                                    originalType: 'String',
+                                },
+                                weight: {
+                                    type: ['number', 'null'],
+                                    originalType: 'Float',
+                                },
+                                is18: {
+                                    type: ['boolean', 'null'],
+                                    originalType: 'Boolean',
+                                },
+                                name: {
+                                    type: ['string', 'null'],
+                                    originalType: 'String',
+                                },
+                                role: {
+                                    type: 'string',
+                                    originalType: 'Role',
+                                    default: 'USER',
+                                    enum: ['USER', 'ADMIN'],
+                                },
+                                keywords: {
+                                    type: 'array',
+                                    originalType: 'String',
+                                    items: {
+                                        type: 'string',
+                                    },
+                                },
+                                biography: {
+                                    type: [
+                                        'number',
+                                        'string',
+                                        'boolean',
+                                        'object',
+                                        'array',
+                                        'null',
+                                    ],
+                                    originalType: 'Json',
+                                },
+                                required: ['email', 'keywords', 'biography'],
                             },
-                            createdAt: {
-                                format: 'date-time',
-                                originalType: 'DateTime',
-                                type: 'string',
+                            where: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    createdAt: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    email: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    weight: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    is18: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    name: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    role: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    keywords: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    biography: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                },
                             },
-                            email: {
-                                description:
-                                    'Triple Slash Comment: Will show up in JSON schema [EMAIL]',
-                                originalType: 'String',
-                                type: 'string',
+                            select: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'boolean',
+                                    },
+                                    createdAt: {
+                                        type: 'boolean',
+                                    },
+                                    email: {
+                                        type: 'boolean',
+                                    },
+                                    weight: {
+                                        type: 'boolean',
+                                    },
+                                    is18: {
+                                        type: 'boolean',
+                                    },
+                                    name: {
+                                        type: 'boolean',
+                                    },
+                                    role: {
+                                        type: 'boolean',
+                                    },
+                                    keywords: {
+                                        type: 'boolean',
+                                    },
+                                    biography: {
+                                        type: 'boolean',
+                                    },
+                                },
                             },
-                            favouriteDecimal: {
-                                default: 22.222222,
-                                originalType: 'Decimal',
-                                type: 'number',
-                            },
-                            id: { originalType: 'Int', type: 'integer' },
-                            is18: {
-                                default: false,
-                                originalType: 'Boolean',
-                                type: ['boolean', 'null'],
-                            },
-                            keywords: {
-                                items: { type: 'string' },
-                                originalType: 'String',
-                                type: 'array',
-                            },
-                            name: {
-                                default: 'Bela B',
-                                originalType: 'String',
-                                type: ['string', 'null'],
-                            },
-                            number: {
-                                default: '34534535435353',
-                                originalType: 'BigInt',
-                                type: 'integer',
-                            },
-                            posts: {
-                                items: { $ref: 'Post' },
-                                originalType: 'Post',
-                                type: 'array',
-                            },
-                            predecessor: {
-                                anyOf: [{ $ref: 'User' }, { type: 'null' }],
-                                originalType: 'User',
-                            },
-                            role: {
-                                default: 'USER',
-                                enum: ['USER', 'ADMIN'],
-                                originalType: 'Role',
-                                type: 'string',
-                            },
-                            successor: {
-                                anyOf: [{ $ref: 'User' }, { type: 'null' }],
-                                originalType: 'User',
-                            },
-                            weight: {
-                                default: 333.33,
-                                originalType: 'Float',
-                                type: ['number', 'null'],
+                            forInclude: {
+                                type: 'object',
+                                properties: {
+                                    select: {
+                                        id: {
+                                            type: 'boolean',
+                                        },
+                                        createdAt: {
+                                            type: 'boolean',
+                                        },
+                                        email: {
+                                            type: 'boolean',
+                                        },
+                                        weight: {
+                                            type: 'boolean',
+                                        },
+                                        is18: {
+                                            type: 'boolean',
+                                        },
+                                        name: {
+                                            type: 'boolean',
+                                        },
+                                        role: {
+                                            type: 'boolean',
+                                        },
+                                        keywords: {
+                                            type: 'boolean',
+                                        },
+                                        biography: {
+                                            type: 'boolean',
+                                        },
+                                    },
+                                    where: {
+                                        $ref: '#/properties/where',
+                                    },
+                                },
                             },
                         },
-                        type: 'object',
+                        definitions: {
+                            comparisonOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(equals|not|in|notIn|lt|gt|lte|gte|contains|search|mode|startsWith|endsWith)$':
+                                        {
+                                            anyOf: [
+                                                {
+                                                    type: 'string',
+                                                },
+                                                {
+                                                    type: 'number',
+                                                },
+                                                {
+                                                    type: 'null',
+                                                },
+                                            ],
+                                        },
+                                },
+                                properties: {
+                                    mode: {
+                                        anyOf: [
+                                            {
+                                                type: 'string',
+                                                enum: ['insensitive'],
+                                            },
+                                            {
+                                                type: 'null',
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                            logicalOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(AND|OR|NOT)$': {
+                                        type: 'array',
+                                        items: {
+                                            $ref: '#/properties/where',
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        $schema: 'http://json-schema.org/draft-07/schema#',
                     },
                 ],
                 [
                     'Post',
                     {
                         $id: 'Post',
-                        $schema: 'http://json-schema.org/draft-07/schema#',
+                        type: 'object',
                         properties: {
-                            id: { originalType: 'Int', type: 'integer' },
-                            user: {
-                                anyOf: [{ $ref: 'User' }, { type: 'null' }],
-                                originalType: 'User',
+                            withoutRequired: {
+                                id: {
+                                    type: 'integer',
+                                    originalType: 'Int',
+                                },
+                            },
+                            withRequired: {
+                                id: {
+                                    type: 'integer',
+                                    originalType: 'Int',
+                                },
+                                required: [],
+                            },
+                            where: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                            select: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'boolean',
+                                    },
+                                },
+                            },
+                            forInclude: {
+                                type: 'object',
+                                properties: {
+                                    select: {
+                                        id: {
+                                            type: 'boolean',
+                                        },
+                                    },
+                                    where: {
+                                        $ref: '#/properties/where',
+                                    },
+                                },
                             },
                         },
-                        type: 'object',
+                        definitions: {
+                            comparisonOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(equals|not|in|notIn|lt|gt|lte|gte|contains|search|mode|startsWith|endsWith)$':
+                                        {
+                                            anyOf: [
+                                                {
+                                                    type: 'string',
+                                                },
+                                                {
+                                                    type: 'number',
+                                                },
+                                                {
+                                                    type: 'null',
+                                                },
+                                            ],
+                                        },
+                                },
+                                properties: {
+                                    mode: {
+                                        anyOf: [
+                                            {
+                                                type: 'string',
+                                                enum: ['insensitive'],
+                                            },
+                                            {
+                                                type: 'null',
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                            logicalOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(AND|OR|NOT)$': {
+                                        type: 'array',
+                                        items: {
+                                            $ref: '#/properties/where',
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        $schema: 'http://json-schema.org/draft-07/schema#',
                     },
                 ],
             ])
         })
 
         it('force use anyOf for union types if requested', async () => {
-            const dmmf = await getDMMF({ datamodel: datamodelPostGresQL })
+            const dmmf = await getDMMF({ datamodel: datamodel })
             expect(transformDMMF(dmmf, { forceAnyOf: 'true' })).toEqual([
                 [
                     'User',
                     {
                         $id: 'User',
-                        $schema: 'http://json-schema.org/draft-07/schema#',
+                        type: 'object',
                         properties: {
-                            biography: {
-                                anyOf: [
-                                    { type: 'number' },
-                                    { type: 'string' },
-                                    { type: 'boolean' },
-                                    { type: 'object' },
-                                    { type: 'array' },
-                                    { type: 'null' },
-                                ],
+                            withoutRequired: {
+                                id: {
+                                    type: 'integer',
+                                },
+                                createdAt: {
+                                    type: 'string',
+                                    format: 'date-time',
+                                },
+                                email: {
+                                    type: 'string',
+                                },
+                                weight: {
+                                    anyOf: [
+                                        {
+                                            type: 'number',
+                                        },
+                                        {
+                                            type: 'null',
+                                        },
+                                    ],
+                                },
+                                is18: {
+                                    anyOf: [
+                                        {
+                                            type: 'boolean',
+                                        },
+                                        {
+                                            type: 'null',
+                                        },
+                                    ],
+                                },
+                                name: {
+                                    anyOf: [
+                                        {
+                                            type: 'string',
+                                        },
+                                        {
+                                            type: 'null',
+                                        },
+                                    ],
+                                },
+                                role: {
+                                    type: 'string',
+                                    default: 'USER',
+                                    enum: ['USER', 'ADMIN'],
+                                },
+                                keywords: {
+                                    type: 'array',
+                                    items: {
+                                        type: 'string',
+                                    },
+                                },
+                                biography: {
+                                    anyOf: [
+                                        {
+                                            type: 'number',
+                                        },
+                                        {
+                                            type: 'string',
+                                        },
+                                        {
+                                            type: 'boolean',
+                                        },
+                                        {
+                                            type: 'object',
+                                        },
+                                        {
+                                            type: 'array',
+                                        },
+                                        {
+                                            type: 'null',
+                                        },
+                                    ],
+                                },
                             },
-                            bytes: {
-                                description:
-                                    'Triple Slash Inline Comment: Will show up in JSON schema [BYTES]',
-                                type: 'string',
+                            withRequired: {
+                                id: {
+                                    type: 'integer',
+                                },
+                                createdAt: {
+                                    type: 'string',
+                                    format: 'date-time',
+                                },
+                                email: {
+                                    type: 'string',
+                                },
+                                weight: {
+                                    anyOf: [
+                                        {
+                                            type: 'number',
+                                        },
+                                        {
+                                            type: 'null',
+                                        },
+                                    ],
+                                },
+                                is18: {
+                                    anyOf: [
+                                        {
+                                            type: 'boolean',
+                                        },
+                                        {
+                                            type: 'null',
+                                        },
+                                    ],
+                                },
+                                name: {
+                                    anyOf: [
+                                        {
+                                            type: 'string',
+                                        },
+                                        {
+                                            type: 'null',
+                                        },
+                                    ],
+                                },
+                                role: {
+                                    type: 'string',
+                                    default: 'USER',
+                                    enum: ['USER', 'ADMIN'],
+                                },
+                                keywords: {
+                                    type: 'array',
+                                    items: {
+                                        type: 'string',
+                                    },
+                                },
+                                biography: {
+                                    anyOf: [
+                                        {
+                                            type: 'number',
+                                        },
+                                        {
+                                            type: 'string',
+                                        },
+                                        {
+                                            type: 'boolean',
+                                        },
+                                        {
+                                            type: 'object',
+                                        },
+                                        {
+                                            type: 'array',
+                                        },
+                                        {
+                                            type: 'null',
+                                        },
+                                    ],
+                                },
+                                required: ['email', 'keywords', 'biography'],
                             },
-                            createdAt: { format: 'date-time', type: 'string' },
-                            email: {
-                                description:
-                                    'Triple Slash Comment: Will show up in JSON schema [EMAIL]',
-                                type: 'string',
+                            where: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    createdAt: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    email: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    weight: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    is18: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    name: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    role: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    keywords: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    biography: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                },
                             },
-                            favouriteDecimal: {
-                                default: 22.222222,
-                                type: 'number',
+                            select: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'boolean',
+                                    },
+                                    createdAt: {
+                                        type: 'boolean',
+                                    },
+                                    email: {
+                                        type: 'boolean',
+                                    },
+                                    weight: {
+                                        type: 'boolean',
+                                    },
+                                    is18: {
+                                        type: 'boolean',
+                                    },
+                                    name: {
+                                        type: 'boolean',
+                                    },
+                                    role: {
+                                        type: 'boolean',
+                                    },
+                                    keywords: {
+                                        type: 'boolean',
+                                    },
+                                    biography: {
+                                        type: 'boolean',
+                                    },
+                                },
                             },
-                            id: { type: 'integer' },
-                            is18: {
-                                anyOf: [{ type: 'boolean' }, { type: 'null' }],
-                                default: false,
-                            },
-                            keywords: {
-                                items: { type: 'string' },
-                                type: 'array',
-                            },
-                            name: {
-                                anyOf: [{ type: 'string' }, { type: 'null' }],
-                                default: 'Bela B',
-                            },
-                            number: {
-                                default: '34534535435353',
-                                type: 'integer',
-                            },
-                            posts: { items: { $ref: 'Post' }, type: 'array' },
-                            predecessor: {
-                                anyOf: [{ $ref: 'User' }, { type: 'null' }],
-                            },
-                            role: {
-                                default: 'USER',
-                                enum: ['USER', 'ADMIN'],
-                                type: 'string',
-                            },
-                            successor: {
-                                anyOf: [{ $ref: 'User' }, { type: 'null' }],
-                            },
-                            weight: {
-                                anyOf: [{ type: 'number' }, { type: 'null' }],
-                                default: 333.33,
+                            forInclude: {
+                                type: 'object',
+                                properties: {
+                                    select: {
+                                        id: {
+                                            type: 'boolean',
+                                        },
+                                        createdAt: {
+                                            type: 'boolean',
+                                        },
+                                        email: {
+                                            type: 'boolean',
+                                        },
+                                        weight: {
+                                            type: 'boolean',
+                                        },
+                                        is18: {
+                                            type: 'boolean',
+                                        },
+                                        name: {
+                                            type: 'boolean',
+                                        },
+                                        role: {
+                                            type: 'boolean',
+                                        },
+                                        keywords: {
+                                            type: 'boolean',
+                                        },
+                                        biography: {
+                                            type: 'boolean',
+                                        },
+                                    },
+                                    where: {
+                                        $ref: '#/properties/where',
+                                    },
+                                },
                             },
                         },
-                        type: 'object',
+                        definitions: {
+                            comparisonOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(equals|not|in|notIn|lt|gt|lte|gte|contains|search|mode|startsWith|endsWith)$':
+                                        {
+                                            anyOf: [
+                                                {
+                                                    type: 'string',
+                                                },
+                                                {
+                                                    type: 'number',
+                                                },
+                                                {
+                                                    type: 'null',
+                                                },
+                                            ],
+                                        },
+                                },
+                                properties: {
+                                    mode: {
+                                        anyOf: [
+                                            {
+                                                type: 'string',
+                                                enum: ['insensitive'],
+                                            },
+                                            {
+                                                type: 'null',
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                            logicalOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(AND|OR|NOT)$': {
+                                        type: 'array',
+                                        items: {
+                                            $ref: '#/properties/where',
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        $schema: 'http://json-schema.org/draft-07/schema#',
                     },
                 ],
                 [
                     'Post',
                     {
                         $id: 'Post',
-                        $schema: 'http://json-schema.org/draft-07/schema#',
+                        type: 'object',
                         properties: {
-                            id: { type: 'integer' },
-                            user: {
-                                anyOf: [{ $ref: 'User' }, { type: 'null' }],
+                            withoutRequired: {
+                                id: {
+                                    type: 'integer',
+                                },
+                            },
+                            withRequired: {
+                                id: {
+                                    type: 'integer',
+                                },
+                                required: [],
+                            },
+                            where: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                            select: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'boolean',
+                                    },
+                                },
+                            },
+                            forInclude: {
+                                type: 'object',
+                                properties: {
+                                    select: {
+                                        id: {
+                                            type: 'boolean',
+                                        },
+                                    },
+                                    where: {
+                                        $ref: '#/properties/where',
+                                    },
+                                },
                             },
                         },
-                        type: 'object',
+                        definitions: {
+                            comparisonOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(equals|not|in|notIn|lt|gt|lte|gte|contains|search|mode|startsWith|endsWith)$':
+                                        {
+                                            anyOf: [
+                                                {
+                                                    type: 'string',
+                                                },
+                                                {
+                                                    type: 'number',
+                                                },
+                                                {
+                                                    type: 'null',
+                                                },
+                                            ],
+                                        },
+                                },
+                                properties: {
+                                    mode: {
+                                        anyOf: [
+                                            {
+                                                type: 'string',
+                                                enum: ['insensitive'],
+                                            },
+                                            {
+                                                type: 'null',
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                            logicalOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(AND|OR|NOT)$': {
+                                        type: 'array',
+                                        items: {
+                                            $ref: '#/properties/where',
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        $schema: 'http://json-schema.org/draft-07/schema#',
                     },
                 ],
             ])
         })
 
         it('force not using anyOf for union types if requested', async () => {
-            const dmmf = await getDMMF({ datamodel: datamodelPostGresQL })
+            const dmmf = await getDMMF({ datamodel: datamodel })
             expect(transformDMMF(dmmf, { forceAnyOf: 'false' })).toEqual([
                 [
                     'User',
                     {
                         $id: 'User',
-                        $schema: 'http://json-schema.org/draft-07/schema#',
+                        type: 'object',
                         properties: {
-                            biography: {
-                                type: [
-                                    'number',
-                                    'string',
-                                    'boolean',
-                                    'object',
-                                    'array',
-                                    'null',
-                                ],
+                            withoutRequired: {
+                                id: {
+                                    type: 'integer',
+                                },
+                                createdAt: {
+                                    type: 'string',
+                                    format: 'date-time',
+                                },
+                                email: {
+                                    type: 'string',
+                                },
+                                weight: {
+                                    type: ['number', 'null'],
+                                },
+                                is18: {
+                                    type: ['boolean', 'null'],
+                                },
+                                name: {
+                                    type: ['string', 'null'],
+                                },
+                                role: {
+                                    type: 'string',
+                                    default: 'USER',
+                                    enum: ['USER', 'ADMIN'],
+                                },
+                                keywords: {
+                                    type: 'array',
+                                    items: {
+                                        type: 'string',
+                                    },
+                                },
+                                biography: {
+                                    type: [
+                                        'number',
+                                        'string',
+                                        'boolean',
+                                        'object',
+                                        'array',
+                                        'null',
+                                    ],
+                                },
                             },
-                            bytes: {
-                                description:
-                                    'Triple Slash Inline Comment: Will show up in JSON schema [BYTES]',
-                                type: 'string',
+                            withRequired: {
+                                id: {
+                                    type: 'integer',
+                                },
+                                createdAt: {
+                                    type: 'string',
+                                    format: 'date-time',
+                                },
+                                email: {
+                                    type: 'string',
+                                },
+                                weight: {
+                                    type: ['number', 'null'],
+                                },
+                                is18: {
+                                    type: ['boolean', 'null'],
+                                },
+                                name: {
+                                    type: ['string', 'null'],
+                                },
+                                role: {
+                                    type: 'string',
+                                    default: 'USER',
+                                    enum: ['USER', 'ADMIN'],
+                                },
+                                keywords: {
+                                    type: 'array',
+                                    items: {
+                                        type: 'string',
+                                    },
+                                },
+                                biography: {
+                                    type: [
+                                        'number',
+                                        'string',
+                                        'boolean',
+                                        'object',
+                                        'array',
+                                        'null',
+                                    ],
+                                },
+                                required: ['email', 'keywords', 'biography'],
                             },
-                            createdAt: { format: 'date-time', type: 'string' },
-                            email: {
-                                description:
-                                    'Triple Slash Comment: Will show up in JSON schema [EMAIL]',
-                                type: 'string',
+                            where: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    createdAt: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    email: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    weight: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    is18: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    name: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    role: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    keywords: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                    biography: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                },
                             },
-                            favouriteDecimal: {
-                                default: 22.222222,
-                                type: 'number',
+                            select: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'boolean',
+                                    },
+                                    createdAt: {
+                                        type: 'boolean',
+                                    },
+                                    email: {
+                                        type: 'boolean',
+                                    },
+                                    weight: {
+                                        type: 'boolean',
+                                    },
+                                    is18: {
+                                        type: 'boolean',
+                                    },
+                                    name: {
+                                        type: 'boolean',
+                                    },
+                                    role: {
+                                        type: 'boolean',
+                                    },
+                                    keywords: {
+                                        type: 'boolean',
+                                    },
+                                    biography: {
+                                        type: 'boolean',
+                                    },
+                                },
                             },
-                            id: { type: 'integer' },
-                            is18: { default: false, type: ['boolean', 'null'] },
-                            keywords: {
-                                items: { type: 'string' },
-                                type: 'array',
-                            },
-                            name: {
-                                default: 'Bela B',
-                                type: ['string', 'null'],
-                            },
-                            number: {
-                                default: '34534535435353',
-                                type: 'integer',
-                            },
-                            posts: { items: { $ref: 'Post' }, type: 'array' },
-                            predecessor: {
-                                anyOf: [{ $ref: 'User' }, { type: 'null' }],
-                            },
-                            role: {
-                                default: 'USER',
-                                enum: ['USER', 'ADMIN'],
-                                type: 'string',
-                            },
-                            successor: {
-                                anyOf: [{ $ref: 'User' }, { type: 'null' }],
-                            },
-                            weight: {
-                                default: 333.33,
-                                type: ['number', 'null'],
+                            forInclude: {
+                                type: 'object',
+                                properties: {
+                                    select: {
+                                        id: {
+                                            type: 'boolean',
+                                        },
+                                        createdAt: {
+                                            type: 'boolean',
+                                        },
+                                        email: {
+                                            type: 'boolean',
+                                        },
+                                        weight: {
+                                            type: 'boolean',
+                                        },
+                                        is18: {
+                                            type: 'boolean',
+                                        },
+                                        name: {
+                                            type: 'boolean',
+                                        },
+                                        role: {
+                                            type: 'boolean',
+                                        },
+                                        keywords: {
+                                            type: 'boolean',
+                                        },
+                                        biography: {
+                                            type: 'boolean',
+                                        },
+                                    },
+                                    where: {
+                                        $ref: '#/properties/where',
+                                    },
+                                },
                             },
                         },
-                        type: 'object',
+                        definitions: {
+                            comparisonOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(equals|not|in|notIn|lt|gt|lte|gte|contains|search|mode|startsWith|endsWith)$':
+                                        {
+                                            anyOf: [
+                                                {
+                                                    type: 'string',
+                                                },
+                                                {
+                                                    type: 'number',
+                                                },
+                                                {
+                                                    type: 'null',
+                                                },
+                                            ],
+                                        },
+                                },
+                                properties: {
+                                    mode: {
+                                        anyOf: [
+                                            {
+                                                type: 'string',
+                                                enum: ['insensitive'],
+                                            },
+                                            {
+                                                type: 'null',
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                            logicalOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(AND|OR|NOT)$': {
+                                        type: 'array',
+                                        items: {
+                                            $ref: '#/properties/where',
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        $schema: 'http://json-schema.org/draft-07/schema#',
                     },
                 ],
                 [
                     'Post',
                     {
                         $id: 'Post',
-                        $schema: 'http://json-schema.org/draft-07/schema#',
+                        type: 'object',
                         properties: {
-                            id: { type: 'integer' },
-                            user: {
-                                anyOf: [{ $ref: 'User' }, { type: 'null' }],
+                            withoutRequired: {
+                                id: {
+                                    type: 'integer',
+                                },
+                            },
+                            withRequired: {
+                                id: {
+                                    type: 'integer',
+                                },
+                                required: [],
+                            },
+                            where: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        allOf: [
+                                            {
+                                                $ref: '#/definitions/comparisonOperators',
+                                            },
+                                            {
+                                                $ref: '#/definitions/logicalOperators',
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                            select: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'boolean',
+                                    },
+                                },
+                            },
+                            forInclude: {
+                                type: 'object',
+                                properties: {
+                                    select: {
+                                        id: {
+                                            type: 'boolean',
+                                        },
+                                    },
+                                    where: {
+                                        $ref: '#/properties/where',
+                                    },
+                                },
                             },
                         },
-                        type: 'object',
-                    },
-                ],
-            ])
-        })
-    })
-
-    describe('db mongodb', () => {
-        it('returns JSON schema for given models', async () => {
-            const dmmf = await getDMMF({ datamodel: datamodelMongoDB })
-            expect(transformDMMF(dmmf)).toEqual([
-                [
-                    'User',
-                    {
-                        $id: 'User',
-                        $schema: 'http://json-schema.org/draft-07/schema#',
-                        properties: {
-                            id: { type: 'string' },
-                            photos: { items: { $ref: 'Photo' }, type: 'array' },
+                        definitions: {
+                            comparisonOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(equals|not|in|notIn|lt|gt|lte|gte|contains|search|mode|startsWith|endsWith)$':
+                                        {
+                                            anyOf: [
+                                                {
+                                                    type: 'string',
+                                                },
+                                                {
+                                                    type: 'number',
+                                                },
+                                                {
+                                                    type: 'null',
+                                                },
+                                            ],
+                                        },
+                                },
+                                properties: {
+                                    mode: {
+                                        anyOf: [
+                                            {
+                                                type: 'string',
+                                                enum: ['insensitive'],
+                                            },
+                                            {
+                                                type: 'null',
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                            logicalOperators: {
+                                type: 'object',
+                                patternProperties: {
+                                    '^(AND|OR|NOT)$': {
+                                        type: 'array',
+                                        items: {
+                                            $ref: '#/properties/where',
+                                        },
+                                    },
+                                },
+                            },
                         },
-                        type: 'object',
-                    },
-                ],
-                [
-                    'Photo',
-                    {
-                        $id: 'Photo',
                         $schema: 'http://json-schema.org/draft-07/schema#',
-                        properties: {
-                            height: { default: 200, type: 'integer' },
-                            url: { type: 'string' },
-                            width: { default: 100, type: 'integer' },
-                        },
-                        type: 'object',
                     },
                 ],
             ])
