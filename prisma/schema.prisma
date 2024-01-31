@@ -3,10 +3,8 @@ generator client {
 }
 
 generator docs {
-  provider           = "node ./dist/index.js"
-  generateExportFile = true
-  useAssert          = false
-  ignoreDefaults     = true
+  provider           = "node ./dist/src/index.js"
+  forceAnyOf   = false
 }
 
 datasource db {

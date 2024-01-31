@@ -2,82 +2,328 @@
   "$id": "User",
   "type": "object",
   "properties": {
-    "id": {
-      "type": "integer"
-    },
-    "createdAt": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "email": {
-      "type": "string"
-    },
-    "weight": {
-      "type": [
-        "number",
-        "null"
-      ]
-    },
-    "is18": {
-      "type": [
-        "boolean",
-        "null"
-      ]
-    },
-    "name": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "successor": {
-      "anyOf": [
-        {
-          "$ref": "User"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "predecessor": {
-      "anyOf": [
-        {
-          "$ref": "User"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "role": {
-      "type": "string",
-      "enum": [
-        "USER",
-        "ADMIN"
-      ]
-    },
-    "posts": {
-      "type": "array",
-      "items": {
-        "$ref": "Post"
-      }
-    },
-    "keywords": {
-      "type": "array",
-      "items": {
+    "withoutRequired": {
+      "id": {
+        "type": "integer"
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "email": {
         "type": "string"
+      },
+      "weight": {
+        "type": [
+          "number",
+          "null"
+        ]
+      },
+      "is18": {
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
+      "name": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "role": {
+        "type": "string",
+        "default": "USER",
+        "enum": [
+          "USER",
+          "ADMIN"
+        ]
+      },
+      "keywords": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "biography": {
+        "type": [
+          "number",
+          "string",
+          "boolean",
+          "object",
+          "array",
+          "null"
+        ]
       }
     },
-    "biography": {
-      "type": [
-        "number",
-        "string",
-        "boolean",
-        "object",
-        "array",
-        "null"
+    "withRequired": {
+      "id": {
+        "type": "integer"
+      },
+      "createdAt": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "email": {
+        "type": "string"
+      },
+      "weight": {
+        "type": [
+          "number",
+          "null"
+        ]
+      },
+      "is18": {
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
+      "name": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "role": {
+        "type": "string",
+        "default": "USER",
+        "enum": [
+          "USER",
+          "ADMIN"
+        ]
+      },
+      "keywords": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "biography": {
+        "type": [
+          "number",
+          "string",
+          "boolean",
+          "object",
+          "array",
+          "null"
+        ]
+      },
+      "required": [
+        "email",
+        "keywords",
+        "biography"
       ]
+    },
+    "where": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/comparisonOperators"
+            },
+            {
+              "$ref": "#/definitions/logicalOperators"
+            }
+          ]
+        },
+        "createdAt": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/comparisonOperators"
+            },
+            {
+              "$ref": "#/definitions/logicalOperators"
+            }
+          ]
+        },
+        "email": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/comparisonOperators"
+            },
+            {
+              "$ref": "#/definitions/logicalOperators"
+            }
+          ]
+        },
+        "weight": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/comparisonOperators"
+            },
+            {
+              "$ref": "#/definitions/logicalOperators"
+            }
+          ]
+        },
+        "is18": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/comparisonOperators"
+            },
+            {
+              "$ref": "#/definitions/logicalOperators"
+            }
+          ]
+        },
+        "name": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/comparisonOperators"
+            },
+            {
+              "$ref": "#/definitions/logicalOperators"
+            }
+          ]
+        },
+        "role": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/comparisonOperators"
+            },
+            {
+              "$ref": "#/definitions/logicalOperators"
+            }
+          ]
+        },
+        "keywords": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/comparisonOperators"
+            },
+            {
+              "$ref": "#/definitions/logicalOperators"
+            }
+          ]
+        },
+        "biography": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/comparisonOperators"
+            },
+            {
+              "$ref": "#/definitions/logicalOperators"
+            }
+          ]
+        }
+      }
+    },
+    "select": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "boolean"
+        },
+        "email": {
+          "type": "boolean"
+        },
+        "weight": {
+          "type": "boolean"
+        },
+        "is18": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "boolean"
+        },
+        "role": {
+          "type": "boolean"
+        },
+        "keywords": {
+          "type": "boolean"
+        },
+        "biography": {
+          "type": "boolean"
+        }
+      }
+    },
+    "forInclude": {
+      "type": "object",
+      "properties": {
+        "select": {
+          "id": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "boolean"
+          },
+          "email": {
+            "type": "boolean"
+          },
+          "weight": {
+            "type": "boolean"
+          },
+          "is18": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "boolean"
+          },
+          "role": {
+            "type": "boolean"
+          },
+          "keywords": {
+            "type": "boolean"
+          },
+          "biography": {
+            "type": "boolean"
+          }
+        },
+        "where": {
+          "$ref": "#/properties/where"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "comparisonOperators": {
+      "type": "object",
+      "patternProperties": {
+        "^(equals|not|in|notIn|lt|gt|lte|gte|contains|search|mode|startsWith|endsWith)$": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "properties": {
+        "mode": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "insensitive"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "logicalOperators": {
+      "type": "object",
+      "patternProperties": {
+        "^(AND|OR|NOT)$": {
+          "type": "array",
+          "items": {
+            "$ref": "#/properties/where"
+          }
+        }
+      }
     }
   },
   "$schema": "http://json-schema.org/draft-07/schema#"

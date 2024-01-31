@@ -2,18 +2,98 @@
   "$id": "Post",
   "type": "object",
   "properties": {
-    "id": {
-      "type": "integer"
+    "withoutRequired": {
+      "id": {
+        "type": "integer"
+      }
     },
-    "user": {
-      "anyOf": [
-        {
-          "$ref": "User"
-        },
-        {
-          "type": "null"
+    "withRequired": {
+      "id": {
+        "type": "integer"
+      },
+      "required": []
+    },
+    "where": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/comparisonOperators"
+            },
+            {
+              "$ref": "#/definitions/logicalOperators"
+            }
+          ]
         }
-      ]
+      }
+    },
+    "select": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "boolean"
+        }
+      }
+    },
+    "forInclude": {
+      "type": "object",
+      "properties": {
+        "select": {
+          "id": {
+            "type": "boolean"
+          }
+        },
+        "where": {
+          "$ref": "#/properties/where"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "comparisonOperators": {
+      "type": "object",
+      "patternProperties": {
+        "^(equals|not|in|notIn|lt|gt|lte|gte|contains|search|mode|startsWith|endsWith)$": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "properties": {
+        "mode": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "insensitive"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "logicalOperators": {
+      "type": "object",
+      "patternProperties": {
+        "^(AND|OR|NOT)$": {
+          "type": "array",
+          "items": {
+            "$ref": "#/properties/where"
+          }
+        }
+      }
     }
   },
   "$schema": "http://json-schema.org/draft-07/schema#"
