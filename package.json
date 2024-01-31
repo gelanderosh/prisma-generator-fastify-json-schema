@@ -78,6 +78,6 @@
         "trailingComma": "all"
     },
     "bin": {
-        "prisma-generator-fastify-json-schema": "dist/cli.js"
+        "prisma-generator-fastify-json-schema": "dist/src/cli.js"
     }
 }
