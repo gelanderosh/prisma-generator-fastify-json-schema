@@ -3,111 +3,117 @@
   "type": "object",
   "properties": {
     "withoutRequired": {
-      "id": {
-        "type": "integer"
-      },
-      "createdAt": {
-        "type": "string",
-        "format": "date-time"
-      },
-      "email": {
-        "type": "string"
-      },
-      "weight": {
-        "type": [
-          "number",
-          "null"
-        ]
-      },
-      "is18": {
-        "type": [
-          "boolean",
-          "null"
-        ]
-      },
-      "name": {
-        "type": [
-          "string",
-          "null"
-        ]
-      },
-      "role": {
-        "type": "string",
-        "default": "USER",
-        "enum": [
-          "USER",
-          "ADMIN"
-        ]
-      },
-      "keywords": {
-        "type": "array",
-        "items": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "email": {
           "type": "string"
+        },
+        "weight": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "is18": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "role": {
+          "type": "string",
+          "default": "USER",
+          "enum": [
+            "USER",
+            "ADMIN"
+          ]
+        },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "biography": {
+          "type": [
+            "number",
+            "string",
+            "boolean",
+            "object",
+            "array",
+            "null"
+          ]
         }
-      },
-      "biography": {
-        "type": [
-          "number",
-          "string",
-          "boolean",
-          "object",
-          "array",
-          "null"
-        ]
       }
     },
     "withRequired": {
-      "id": {
-        "type": "integer"
-      },
-      "createdAt": {
-        "type": "string",
-        "format": "date-time"
-      },
-      "email": {
-        "type": "string"
-      },
-      "weight": {
-        "type": [
-          "number",
-          "null"
-        ]
-      },
-      "is18": {
-        "type": [
-          "boolean",
-          "null"
-        ]
-      },
-      "name": {
-        "type": [
-          "string",
-          "null"
-        ]
-      },
-      "role": {
-        "type": "string",
-        "default": "USER",
-        "enum": [
-          "USER",
-          "ADMIN"
-        ]
-      },
-      "keywords": {
-        "type": "array",
-        "items": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "email": {
           "type": "string"
+        },
+        "weight": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "is18": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "role": {
+          "type": "string",
+          "default": "USER",
+          "enum": [
+            "USER",
+            "ADMIN"
+          ]
+        },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "biography": {
+          "type": [
+            "number",
+            "string",
+            "boolean",
+            "object",
+            "array",
+            "null"
+          ]
         }
-      },
-      "biography": {
-        "type": [
-          "number",
-          "string",
-          "boolean",
-          "object",
-          "array",
-          "null"
-        ]
       },
       "required": [
         "email",

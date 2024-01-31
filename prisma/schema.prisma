@@ -3,8 +3,8 @@ generator client {
 }
 
 generator docs {
-  provider           = "node ./dist/src/index.js"
-  forceAnyOf   = false
+  provider           = "node ./dist/index.js"
+  forceAnyOf = false
 }
 
 datasource db {

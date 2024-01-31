@@ -47,87 +47,93 @@ describe('JSON Schema Generator', () => {
                         type: 'object',
                         properties: {
                             withoutRequired: {
-                                id: {
-                                    type: 'integer',
-                                },
-                                createdAt: {
-                                    type: 'string',
-                                    format: 'date-time',
-                                },
-                                email: {
-                                    type: 'string',
-                                },
-                                weight: {
-                                    type: ['number', 'null'],
-                                },
-                                is18: {
-                                    type: ['boolean', 'null'],
-                                },
-                                name: {
-                                    type: ['string', 'null'],
-                                },
-                                role: {
-                                    type: 'string',
-                                    default: 'USER',
-                                    enum: ['USER', 'ADMIN'],
-                                },
-                                keywords: {
-                                    type: 'array',
-                                    items: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                    },
+                                    createdAt: {
+                                        type: 'string',
+                                        format: 'date-time',
+                                    },
+                                    email: {
                                         type: 'string',
                                     },
-                                },
-                                biography: {
-                                    type: [
-                                        'number',
-                                        'string',
-                                        'boolean',
-                                        'object',
-                                        'array',
-                                        'null',
-                                    ],
+                                    weight: {
+                                        type: ['number', 'null'],
+                                    },
+                                    is18: {
+                                        type: ['boolean', 'null'],
+                                    },
+                                    name: {
+                                        type: ['string', 'null'],
+                                    },
+                                    role: {
+                                        type: 'string',
+                                        default: 'USER',
+                                        enum: ['USER', 'ADMIN'],
+                                    },
+                                    keywords: {
+                                        type: 'array',
+                                        items: {
+                                            type: 'string',
+                                        },
+                                    },
+                                    biography: {
+                                        type: [
+                                            'number',
+                                            'string',
+                                            'boolean',
+                                            'object',
+                                            'array',
+                                            'null',
+                                        ],
+                                    },
                                 },
                             },
                             withRequired: {
-                                id: {
-                                    type: 'integer',
-                                },
-                                createdAt: {
-                                    type: 'string',
-                                    format: 'date-time',
-                                },
-                                email: {
-                                    type: 'string',
-                                },
-                                weight: {
-                                    type: ['number', 'null'],
-                                },
-                                is18: {
-                                    type: ['boolean', 'null'],
-                                },
-                                name: {
-                                    type: ['string', 'null'],
-                                },
-                                role: {
-                                    type: 'string',
-                                    default: 'USER',
-                                    enum: ['USER', 'ADMIN'],
-                                },
-                                keywords: {
-                                    type: 'array',
-                                    items: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                    },
+                                    createdAt: {
+                                        type: 'string',
+                                        format: 'date-time',
+                                    },
+                                    email: {
                                         type: 'string',
                                     },
-                                },
-                                biography: {
-                                    type: [
-                                        'number',
-                                        'string',
-                                        'boolean',
-                                        'object',
-                                        'array',
-                                        'null',
-                                    ],
+                                    weight: {
+                                        type: ['number', 'null'],
+                                    },
+                                    is18: {
+                                        type: ['boolean', 'null'],
+                                    },
+                                    name: {
+                                        type: ['string', 'null'],
+                                    },
+                                    role: {
+                                        type: 'string',
+                                        default: 'USER',
+                                        enum: ['USER', 'ADMIN'],
+                                    },
+                                    keywords: {
+                                        type: 'array',
+                                        items: {
+                                            type: 'string',
+                                        },
+                                    },
+                                    biography: {
+                                        type: [
+                                            'number',
+                                            'string',
+                                            'boolean',
+                                            'object',
+                                            'array',
+                                            'null',
+                                        ],
+                                    },
                                 },
                                 required: ['email', 'keywords', 'biography'],
                             },
@@ -351,13 +357,19 @@ describe('JSON Schema Generator', () => {
                         type: 'object',
                         properties: {
                             withoutRequired: {
-                                id: {
-                                    type: 'integer',
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                    },
                                 },
                             },
                             withRequired: {
-                                id: {
-                                    type: 'integer',
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                    },
                                 },
                                 required: [],
                             },
@@ -461,93 +473,99 @@ describe('JSON Schema Generator', () => {
                         type: 'object',
                         properties: {
                             withoutRequired: {
-                                id: {
-                                    type: 'integer',
-                                },
-                                createdAt: {
-                                    type: 'string',
-                                    format: 'date-time',
-                                },
-                                email: {
-                                    type: 'string',
-                                },
-                                weight: {
-                                    type: ['number', 'null'],
-                                },
-                                is18: {
-                                    type: ['boolean', 'null'],
-                                },
-                                name: {
-                                    type: ['string', 'null'],
-                                },
-                                successorId: {
-                                    type: ['integer', 'null'],
-                                },
-                                role: {
-                                    type: 'string',
-                                    default: 'USER',
-                                    enum: ['USER', 'ADMIN'],
-                                },
-                                keywords: {
-                                    type: 'array',
-                                    items: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                    },
+                                    createdAt: {
+                                        type: 'string',
+                                        format: 'date-time',
+                                    },
+                                    email: {
                                         type: 'string',
                                     },
-                                },
-                                biography: {
-                                    type: [
-                                        'number',
-                                        'string',
-                                        'boolean',
-                                        'object',
-                                        'array',
-                                        'null',
-                                    ],
+                                    weight: {
+                                        type: ['number', 'null'],
+                                    },
+                                    is18: {
+                                        type: ['boolean', 'null'],
+                                    },
+                                    name: {
+                                        type: ['string', 'null'],
+                                    },
+                                    successorId: {
+                                        type: ['integer', 'null'],
+                                    },
+                                    role: {
+                                        type: 'string',
+                                        default: 'USER',
+                                        enum: ['USER', 'ADMIN'],
+                                    },
+                                    keywords: {
+                                        type: 'array',
+                                        items: {
+                                            type: 'string',
+                                        },
+                                    },
+                                    biography: {
+                                        type: [
+                                            'number',
+                                            'string',
+                                            'boolean',
+                                            'object',
+                                            'array',
+                                            'null',
+                                        ],
+                                    },
                                 },
                             },
                             withRequired: {
-                                id: {
-                                    type: 'integer',
-                                },
-                                createdAt: {
-                                    type: 'string',
-                                    format: 'date-time',
-                                },
-                                email: {
-                                    type: 'string',
-                                },
-                                weight: {
-                                    type: ['number', 'null'],
-                                },
-                                is18: {
-                                    type: ['boolean', 'null'],
-                                },
-                                name: {
-                                    type: ['string', 'null'],
-                                },
-                                successorId: {
-                                    type: ['integer', 'null'],
-                                },
-                                role: {
-                                    type: 'string',
-                                    default: 'USER',
-                                    enum: ['USER', 'ADMIN'],
-                                },
-                                keywords: {
-                                    type: 'array',
-                                    items: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                    },
+                                    createdAt: {
+                                        type: 'string',
+                                        format: 'date-time',
+                                    },
+                                    email: {
                                         type: 'string',
                                     },
-                                },
-                                biography: {
-                                    type: [
-                                        'number',
-                                        'string',
-                                        'boolean',
-                                        'object',
-                                        'array',
-                                        'null',
-                                    ],
+                                    weight: {
+                                        type: ['number', 'null'],
+                                    },
+                                    is18: {
+                                        type: ['boolean', 'null'],
+                                    },
+                                    name: {
+                                        type: ['string', 'null'],
+                                    },
+                                    successorId: {
+                                        type: ['integer', 'null'],
+                                    },
+                                    role: {
+                                        type: 'string',
+                                        default: 'USER',
+                                        enum: ['USER', 'ADMIN'],
+                                    },
+                                    keywords: {
+                                        type: 'array',
+                                        items: {
+                                            type: 'string',
+                                        },
+                                    },
+                                    biography: {
+                                        type: [
+                                            'number',
+                                            'string',
+                                            'boolean',
+                                            'object',
+                                            'array',
+                                            'null',
+                                        ],
+                                    },
                                 },
                                 required: ['email', 'keywords', 'biography'],
                             },
@@ -787,19 +805,25 @@ describe('JSON Schema Generator', () => {
                         type: 'object',
                         properties: {
                             withoutRequired: {
-                                id: {
-                                    type: 'integer',
-                                },
-                                userId: {
-                                    type: ['integer', 'null'],
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                    },
+                                    userId: {
+                                        type: ['integer', 'null'],
+                                    },
                                 },
                             },
                             withRequired: {
-                                id: {
-                                    type: 'integer',
-                                },
-                                userId: {
-                                    type: ['integer', 'null'],
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                    },
+                                    userId: {
+                                        type: ['integer', 'null'],
+                                    },
                                 },
                                 required: [],
                             },
@@ -919,105 +943,111 @@ describe('JSON Schema Generator', () => {
                         type: 'object',
                         properties: {
                             withoutRequired: {
-                                id: {
-                                    type: 'integer',
-                                    originalType: 'Int',
-                                },
-                                createdAt: {
-                                    type: 'string',
-                                    originalType: 'DateTime',
-                                    format: 'date-time',
-                                },
-                                email: {
-                                    type: 'string',
-                                    originalType: 'String',
-                                },
-                                weight: {
-                                    type: ['number', 'null'],
-                                    originalType: 'Float',
-                                },
-                                is18: {
-                                    type: ['boolean', 'null'],
-                                    originalType: 'Boolean',
-                                },
-                                name: {
-                                    type: ['string', 'null'],
-                                    originalType: 'String',
-                                },
-                                role: {
-                                    type: 'string',
-                                    originalType: 'Role',
-                                    default: 'USER',
-                                    enum: ['USER', 'ADMIN'],
-                                },
-                                keywords: {
-                                    type: 'array',
-                                    originalType: 'String',
-                                    items: {
-                                        type: 'string',
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                        originalType: 'Int',
                                     },
-                                },
-                                biography: {
-                                    type: [
-                                        'number',
-                                        'string',
-                                        'boolean',
-                                        'object',
-                                        'array',
-                                        'null',
-                                    ],
-                                    originalType: 'Json',
+                                    createdAt: {
+                                        type: 'string',
+                                        originalType: 'DateTime',
+                                        format: 'date-time',
+                                    },
+                                    email: {
+                                        type: 'string',
+                                        originalType: 'String',
+                                    },
+                                    weight: {
+                                        type: ['number', 'null'],
+                                        originalType: 'Float',
+                                    },
+                                    is18: {
+                                        type: ['boolean', 'null'],
+                                        originalType: 'Boolean',
+                                    },
+                                    name: {
+                                        type: ['string', 'null'],
+                                        originalType: 'String',
+                                    },
+                                    role: {
+                                        type: 'string',
+                                        originalType: 'Role',
+                                        default: 'USER',
+                                        enum: ['USER', 'ADMIN'],
+                                    },
+                                    keywords: {
+                                        type: 'array',
+                                        originalType: 'String',
+                                        items: {
+                                            type: 'string',
+                                        },
+                                    },
+                                    biography: {
+                                        type: [
+                                            'number',
+                                            'string',
+                                            'boolean',
+                                            'object',
+                                            'array',
+                                            'null',
+                                        ],
+                                        originalType: 'Json',
+                                    },
                                 },
                             },
                             withRequired: {
-                                id: {
-                                    type: 'integer',
-                                    originalType: 'Int',
-                                },
-                                createdAt: {
-                                    type: 'string',
-                                    originalType: 'DateTime',
-                                    format: 'date-time',
-                                },
-                                email: {
-                                    type: 'string',
-                                    originalType: 'String',
-                                },
-                                weight: {
-                                    type: ['number', 'null'],
-                                    originalType: 'Float',
-                                },
-                                is18: {
-                                    type: ['boolean', 'null'],
-                                    originalType: 'Boolean',
-                                },
-                                name: {
-                                    type: ['string', 'null'],
-                                    originalType: 'String',
-                                },
-                                role: {
-                                    type: 'string',
-                                    originalType: 'Role',
-                                    default: 'USER',
-                                    enum: ['USER', 'ADMIN'],
-                                },
-                                keywords: {
-                                    type: 'array',
-                                    originalType: 'String',
-                                    items: {
-                                        type: 'string',
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                        originalType: 'Int',
                                     },
-                                },
-                                biography: {
-                                    type: [
-                                        'number',
-                                        'string',
-                                        'boolean',
-                                        'object',
-                                        'array',
-                                        'null',
-                                    ],
-                                    originalType: 'Json',
+                                    createdAt: {
+                                        type: 'string',
+                                        originalType: 'DateTime',
+                                        format: 'date-time',
+                                    },
+                                    email: {
+                                        type: 'string',
+                                        originalType: 'String',
+                                    },
+                                    weight: {
+                                        type: ['number', 'null'],
+                                        originalType: 'Float',
+                                    },
+                                    is18: {
+                                        type: ['boolean', 'null'],
+                                        originalType: 'Boolean',
+                                    },
+                                    name: {
+                                        type: ['string', 'null'],
+                                        originalType: 'String',
+                                    },
+                                    role: {
+                                        type: 'string',
+                                        originalType: 'Role',
+                                        default: 'USER',
+                                        enum: ['USER', 'ADMIN'],
+                                    },
+                                    keywords: {
+                                        type: 'array',
+                                        originalType: 'String',
+                                        items: {
+                                            type: 'string',
+                                        },
+                                    },
+                                    biography: {
+                                        type: [
+                                            'number',
+                                            'string',
+                                            'boolean',
+                                            'object',
+                                            'array',
+                                            'null',
+                                        ],
+                                        originalType: 'Json',
+                                    },
                                 },
                                 required: ['email', 'keywords', 'biography'],
                             },
@@ -1241,15 +1271,21 @@ describe('JSON Schema Generator', () => {
                         type: 'object',
                         properties: {
                             withoutRequired: {
-                                id: {
-                                    type: 'integer',
-                                    originalType: 'Int',
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                        originalType: 'Int',
+                                    },
                                 },
                             },
                             withRequired: {
-                                id: {
-                                    type: 'integer',
-                                    originalType: 'Int',
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                        originalType: 'Int',
+                                    },
                                 },
                                 required: [],
                             },
@@ -1351,153 +1387,159 @@ describe('JSON Schema Generator', () => {
                         type: 'object',
                         properties: {
                             withoutRequired: {
-                                id: {
-                                    type: 'integer',
-                                },
-                                createdAt: {
-                                    type: 'string',
-                                    format: 'date-time',
-                                },
-                                email: {
-                                    type: 'string',
-                                },
-                                weight: {
-                                    anyOf: [
-                                        {
-                                            type: 'number',
-                                        },
-                                        {
-                                            type: 'null',
-                                        },
-                                    ],
-                                },
-                                is18: {
-                                    anyOf: [
-                                        {
-                                            type: 'boolean',
-                                        },
-                                        {
-                                            type: 'null',
-                                        },
-                                    ],
-                                },
-                                name: {
-                                    anyOf: [
-                                        {
-                                            type: 'string',
-                                        },
-                                        {
-                                            type: 'null',
-                                        },
-                                    ],
-                                },
-                                role: {
-                                    type: 'string',
-                                    default: 'USER',
-                                    enum: ['USER', 'ADMIN'],
-                                },
-                                keywords: {
-                                    type: 'array',
-                                    items: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                    },
+                                    createdAt: {
+                                        type: 'string',
+                                        format: 'date-time',
+                                    },
+                                    email: {
                                         type: 'string',
                                     },
-                                },
-                                biography: {
-                                    anyOf: [
-                                        {
-                                            type: 'number',
-                                        },
-                                        {
+                                    weight: {
+                                        anyOf: [
+                                            {
+                                                type: 'number',
+                                            },
+                                            {
+                                                type: 'null',
+                                            },
+                                        ],
+                                    },
+                                    is18: {
+                                        anyOf: [
+                                            {
+                                                type: 'boolean',
+                                            },
+                                            {
+                                                type: 'null',
+                                            },
+                                        ],
+                                    },
+                                    name: {
+                                        anyOf: [
+                                            {
+                                                type: 'string',
+                                            },
+                                            {
+                                                type: 'null',
+                                            },
+                                        ],
+                                    },
+                                    role: {
+                                        type: 'string',
+                                        default: 'USER',
+                                        enum: ['USER', 'ADMIN'],
+                                    },
+                                    keywords: {
+                                        type: 'array',
+                                        items: {
                                             type: 'string',
                                         },
-                                        {
-                                            type: 'boolean',
-                                        },
-                                        {
-                                            type: 'object',
-                                        },
-                                        {
-                                            type: 'array',
-                                        },
-                                        {
-                                            type: 'null',
-                                        },
-                                    ],
+                                    },
+                                    biography: {
+                                        anyOf: [
+                                            {
+                                                type: 'number',
+                                            },
+                                            {
+                                                type: 'string',
+                                            },
+                                            {
+                                                type: 'boolean',
+                                            },
+                                            {
+                                                type: 'object',
+                                            },
+                                            {
+                                                type: 'array',
+                                            },
+                                            {
+                                                type: 'null',
+                                            },
+                                        ],
+                                    },
                                 },
                             },
                             withRequired: {
-                                id: {
-                                    type: 'integer',
-                                },
-                                createdAt: {
-                                    type: 'string',
-                                    format: 'date-time',
-                                },
-                                email: {
-                                    type: 'string',
-                                },
-                                weight: {
-                                    anyOf: [
-                                        {
-                                            type: 'number',
-                                        },
-                                        {
-                                            type: 'null',
-                                        },
-                                    ],
-                                },
-                                is18: {
-                                    anyOf: [
-                                        {
-                                            type: 'boolean',
-                                        },
-                                        {
-                                            type: 'null',
-                                        },
-                                    ],
-                                },
-                                name: {
-                                    anyOf: [
-                                        {
-                                            type: 'string',
-                                        },
-                                        {
-                                            type: 'null',
-                                        },
-                                    ],
-                                },
-                                role: {
-                                    type: 'string',
-                                    default: 'USER',
-                                    enum: ['USER', 'ADMIN'],
-                                },
-                                keywords: {
-                                    type: 'array',
-                                    items: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                    },
+                                    createdAt: {
+                                        type: 'string',
+                                        format: 'date-time',
+                                    },
+                                    email: {
                                         type: 'string',
                                     },
-                                },
-                                biography: {
-                                    anyOf: [
-                                        {
-                                            type: 'number',
-                                        },
-                                        {
+                                    weight: {
+                                        anyOf: [
+                                            {
+                                                type: 'number',
+                                            },
+                                            {
+                                                type: 'null',
+                                            },
+                                        ],
+                                    },
+                                    is18: {
+                                        anyOf: [
+                                            {
+                                                type: 'boolean',
+                                            },
+                                            {
+                                                type: 'null',
+                                            },
+                                        ],
+                                    },
+                                    name: {
+                                        anyOf: [
+                                            {
+                                                type: 'string',
+                                            },
+                                            {
+                                                type: 'null',
+                                            },
+                                        ],
+                                    },
+                                    role: {
+                                        type: 'string',
+                                        default: 'USER',
+                                        enum: ['USER', 'ADMIN'],
+                                    },
+                                    keywords: {
+                                        type: 'array',
+                                        items: {
                                             type: 'string',
                                         },
-                                        {
-                                            type: 'boolean',
-                                        },
-                                        {
-                                            type: 'object',
-                                        },
-                                        {
-                                            type: 'array',
-                                        },
-                                        {
-                                            type: 'null',
-                                        },
-                                    ],
+                                    },
+                                    biography: {
+                                        anyOf: [
+                                            {
+                                                type: 'number',
+                                            },
+                                            {
+                                                type: 'string',
+                                            },
+                                            {
+                                                type: 'boolean',
+                                            },
+                                            {
+                                                type: 'object',
+                                            },
+                                            {
+                                                type: 'array',
+                                            },
+                                            {
+                                                type: 'null',
+                                            },
+                                        ],
+                                    },
                                 },
                                 required: ['email', 'keywords', 'biography'],
                             },
@@ -1721,13 +1763,19 @@ describe('JSON Schema Generator', () => {
                         type: 'object',
                         properties: {
                             withoutRequired: {
-                                id: {
-                                    type: 'integer',
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                    },
                                 },
                             },
                             withRequired: {
-                                id: {
-                                    type: 'integer',
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                    },
                                 },
                                 required: [],
                             },
@@ -1829,87 +1877,93 @@ describe('JSON Schema Generator', () => {
                         type: 'object',
                         properties: {
                             withoutRequired: {
-                                id: {
-                                    type: 'integer',
-                                },
-                                createdAt: {
-                                    type: 'string',
-                                    format: 'date-time',
-                                },
-                                email: {
-                                    type: 'string',
-                                },
-                                weight: {
-                                    type: ['number', 'null'],
-                                },
-                                is18: {
-                                    type: ['boolean', 'null'],
-                                },
-                                name: {
-                                    type: ['string', 'null'],
-                                },
-                                role: {
-                                    type: 'string',
-                                    default: 'USER',
-                                    enum: ['USER', 'ADMIN'],
-                                },
-                                keywords: {
-                                    type: 'array',
-                                    items: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                    },
+                                    createdAt: {
+                                        type: 'string',
+                                        format: 'date-time',
+                                    },
+                                    email: {
                                         type: 'string',
                                     },
-                                },
-                                biography: {
-                                    type: [
-                                        'number',
-                                        'string',
-                                        'boolean',
-                                        'object',
-                                        'array',
-                                        'null',
-                                    ],
+                                    weight: {
+                                        type: ['number', 'null'],
+                                    },
+                                    is18: {
+                                        type: ['boolean', 'null'],
+                                    },
+                                    name: {
+                                        type: ['string', 'null'],
+                                    },
+                                    role: {
+                                        type: 'string',
+                                        default: 'USER',
+                                        enum: ['USER', 'ADMIN'],
+                                    },
+                                    keywords: {
+                                        type: 'array',
+                                        items: {
+                                            type: 'string',
+                                        },
+                                    },
+                                    biography: {
+                                        type: [
+                                            'number',
+                                            'string',
+                                            'boolean',
+                                            'object',
+                                            'array',
+                                            'null',
+                                        ],
+                                    },
                                 },
                             },
                             withRequired: {
-                                id: {
-                                    type: 'integer',
-                                },
-                                createdAt: {
-                                    type: 'string',
-                                    format: 'date-time',
-                                },
-                                email: {
-                                    type: 'string',
-                                },
-                                weight: {
-                                    type: ['number', 'null'],
-                                },
-                                is18: {
-                                    type: ['boolean', 'null'],
-                                },
-                                name: {
-                                    type: ['string', 'null'],
-                                },
-                                role: {
-                                    type: 'string',
-                                    default: 'USER',
-                                    enum: ['USER', 'ADMIN'],
-                                },
-                                keywords: {
-                                    type: 'array',
-                                    items: {
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                    },
+                                    createdAt: {
+                                        type: 'string',
+                                        format: 'date-time',
+                                    },
+                                    email: {
                                         type: 'string',
                                     },
-                                },
-                                biography: {
-                                    type: [
-                                        'number',
-                                        'string',
-                                        'boolean',
-                                        'object',
-                                        'array',
-                                        'null',
-                                    ],
+                                    weight: {
+                                        type: ['number', 'null'],
+                                    },
+                                    is18: {
+                                        type: ['boolean', 'null'],
+                                    },
+                                    name: {
+                                        type: ['string', 'null'],
+                                    },
+                                    role: {
+                                        type: 'string',
+                                        default: 'USER',
+                                        enum: ['USER', 'ADMIN'],
+                                    },
+                                    keywords: {
+                                        type: 'array',
+                                        items: {
+                                            type: 'string',
+                                        },
+                                    },
+                                    biography: {
+                                        type: [
+                                            'number',
+                                            'string',
+                                            'boolean',
+                                            'object',
+                                            'array',
+                                            'null',
+                                        ],
+                                    },
                                 },
                                 required: ['email', 'keywords', 'biography'],
                             },
@@ -2133,13 +2187,19 @@ describe('JSON Schema Generator', () => {
                         type: 'object',
                         properties: {
                             withoutRequired: {
-                                id: {
-                                    type: 'integer',
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                    },
                                 },
                             },
                             withRequired: {
-                                id: {
-                                    type: 'integer',
+                                type: 'object',
+                                properties: {
+                                    id: {
+                                        type: 'integer',
+                                    },
                                 },
                                 required: [],
                             },
