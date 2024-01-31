@@ -1,3 +1,10 @@
+## [2.0.0-beta.5](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2024-01-31)
+
+
+### Bug Fixes
+
+* **schema:** Removed key "mode" from patternProperties in [#definitions](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/issues/definitions)/comparisonOperatiors since its already taken care of in its own property and raises a complaint for matching properties. ([d80cd71](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/commit/d80cd710eccb7e6aa89fa37449035ee33623ee71))
+
 ## [2.0.0-beta.4](https://github.com/mexdevelop/prisma-generator-fastify-json-schema/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2024-01-31)
 
 
