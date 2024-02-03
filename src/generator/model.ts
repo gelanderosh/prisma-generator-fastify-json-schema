@@ -79,14 +79,17 @@ export function getJSONSchemaModel(
             properties: Object.keys(builtProperties).reduce(
                 (acc: Record<string, JSONSchema7Definition>, key) => {
                     acc[key] = {
-                        allOf: [
-                            {
-                                $ref: `#/definitions/comparisonOperators`,
+                        type: 'object',
+                        properties: {
+                            mode: {
+                                anyOf: [
+                                    { type: 'string', enum: ['insensitive'] },
+                                    { type: 'null' },
+                                ],
                             },
-                            {
-                                $ref: `#/definitions/logicalOperators`,
-                            },
-                        ],
+                            ...getComparisonOperators(),
+                            ...getLogicalOperators(model.name),
+                        },
                     }
                     return acc
                 },
@@ -120,45 +123,88 @@ export function getJSONSchemaModel(
                         {},
                     ),
                 },
-                where: { $ref: `#/properties/where` },
-            },
-        }
-
-        definition.definitions = {
-            comparisonOperators: {
-                type: 'object',
-                patternProperties: {
-                    '^(equals|not|in|notIn|lt|gt|lte|gte|contains|search|startsWith|endsWith)$':
-                        {
-                            anyOf: [
-                                { type: 'string' },
-                                { type: 'number' },
-                                { type: 'null' },
-                            ],
+                where: {
+                    type: 'object',
+                    properties: Object.keys(builtProperties).reduce(
+                        (acc: Record<string, JSONSchema7Definition>, key) => {
+                            acc[key] = {
+                                type: 'object',
+                                properties: {
+                                    mode: {
+                                        anyOf: [
+                                            {
+                                                type: 'string',
+                                                enum: ['insensitive'],
+                                            },
+                                            { type: 'null' },
+                                        ],
+                                    },
+                                    ...getComparisonOperators(),
+                                    ...getLogicalOperators(model.name),
+                                },
+                            }
+                            return acc
                         },
-                },
-                properties: {
-                    mode: {
-                        anyOf: [
-                            { type: 'string', enum: ['insensitive'] },
-                            { type: 'null' },
-                        ],
-                    },
-                },
-            },
-            logicalOperators: {
-                type: 'object',
-                patternProperties: {
-                    '^(AND|OR|NOT)$': {
-                        type: 'array',
-                        items: {
-                            $ref: '#/properties/where',
-                        },
-                    },
+                        {},
+                    ),
                 },
             },
         }
 
         return [model.name, definition]
+    }
+}
+
+function getLogicalOperators(schemaName: string): object {
+    return {
+        AND: {
+            type: 'array',
+            items: {
+                $ref: `${schemaName}#/properties/where`,
+            },
+        },
+        OR: {
+            type: 'array',
+            items: {
+                $ref: `${schemaName}#/properties/where`,
+            },
+        },
+        NOT: {
+            type: 'object',
+        },
+    }
+}
+
+function getComparisonOperators() {
+    return {
+        ...[
+            'equals',
+            'not',
+            'in',
+            'notIn',
+            'lt',
+            'gt',
+            'lte',
+            'gte',
+            'contains',
+            'search',
+            'startsWith',
+            'endsWith',
+        ].reduce(
+            (
+                acc: { [key: string]: { anyOf: Array<{ type: string }> } },
+                key,
+            ) => {
+                acc[key] = {
+                    anyOf: [
+                        { type: 'string' },
+                        { type: 'number' },
+                        { type: 'null' },
+                    ],
+                }
+                return acc
+            },
+            {},
+        ),
     }
 }
