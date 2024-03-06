@@ -41,7 +41,7 @@
         "@semantic-release/release-notes-generator": "12.1.0",
         "semantic-release": "23.0.2",
         "@swc/cli": "0.3.10",
-        "@swc/core": "1.4.4",
+        "@swc/core": "1.4.5",
         "@swc/jest": "0.2.36",
         "@types/jest": "29.5.12",
         "@types/json-schema": "7.0.15",
